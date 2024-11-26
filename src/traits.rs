@@ -9,6 +9,12 @@ impl AnimationTime for std::time::Instant {
     }
 }
 
+impl AnimationTime for f32 {
+    fn elapsed_since(self, time: Self) -> f32 {
+        self - time
+    }
+}
+
 /// Defines a float representation for arbitrary types
 ///
 /// The actual float values are pretty arbitrary - as interpolation from
