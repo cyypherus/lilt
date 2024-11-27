@@ -4,4 +4,3 @@ pkg/
 dist/
 traces/
 *.DS_Store
-*.wasm

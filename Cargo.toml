@@ -1,30 +1,38 @@
-[workspace]
-resolver = "2"
-members = [
-    "examples/iced-minimal",
-    "examples/iced-indicator",
-    "examples/iced-demo",
-    "examples/gpui-example",
-    "examples/macroquad-example",
-]
-
-[workspace.package]
-version = "0.1.0"
+[package]
+name = "lilt"
+version = "0.7.0"
 edition = "2021"
+description = "A simple, dependency free library for running interruptable, transition based animations as a function of time."
 repository = "https://github.com/ejjonny/lilt"
 license = "MIT"
 keywords = ["animation", "interpolation"]
 authors = ["ejjonny"]
 
-[package]
-name = "lilt"
-description = "A simple, dependency free library for running interruptable, transition based animations as a function of time."
-version.workspace = true
-edition = { workspace = true }
-repository = { workspace = true }
-license = { workspace = true }
-keywords = { workspace = true }
-authors = { workspace = true }
-
 [lib]
 crate-type = ["lib"]
+
+[[example]]
+name = "iced-minimal"
+path = "examples/iced-minimal/src/main.rs"
+
+[[example]]
+name = "iced-demo"
+path = "examples/iced-demo/src/main.rs"
+
+[[example]]
+name = "iced-indicator"
+path = "examples/iced-indicator/src/main.rs"
+
+[[example]]
+name = "gpui-example"
+path = "examples/gpui-example/src/main.rs"
+
+[dev-dependencies]
+iced = { git = "https://github.com/iced-rs/iced", rev = "169667ef1b4fa754ed1edb5fa0e845aede2638fb", features = [
+    "canvas",
+    "tokio",
+    "svg",
+] }
+
+[target.'cfg(target_os = "macos")'.dev-dependencies]
+gpui = { git = "https://github.com/zed-industries/zed", rev = "5b1ea7eda0bba40e222f7d904ec65e5848f45eee" }

@@ -1,8 +1,0 @@
-[package]
-name = "macroquad-example"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]
-macroquad = { version = "0.4" }
-lilt = { path = "../.." }
