@@ -27,14 +27,14 @@ async fn main() {
         let rect_left = animation1.animate_bool(100., screen_width() - 200.0, time);
         let rotation = animation2.animate_bool(0., 2., time);
 
-        let ox = 300.;
-        let oy = 300.;
+        let axeX = 300.;
+        let axeY = 300.;
         let length = 400.;
         draw_line(
-            ox,
-            oy,
-            (rotation * PI).cos() * (length - ox) - (rotation * PI).sin() * (length - ox) + ox,
-            (rotation * PI).sin() * (length - oy) + (rotation * PI).cos() * (length - oy) + oy,
+            axeX,
+            axeY,
+            (rotation * PI).cos() * (length - axeX) - (rotation * PI).sin() * (length - axeX) + axeX,
+            (rotation * PI).sin() * (length - axeY) + (rotation * PI).cos() * (length - axeY) + axeY,
             15.0,
             BLUE
         );
