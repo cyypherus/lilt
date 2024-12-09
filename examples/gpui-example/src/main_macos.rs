@@ -48,7 +48,7 @@ pub fn main() {
                 animation: Animated::<_, Instant>::new(false)
                     .duration(400.)
                     .auto_start(true, Instant::now())
-                    .repeat(2)
+                    .repeat_forever()
                     .auto_reverse(),
             })
         })
