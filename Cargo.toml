@@ -26,9 +26,6 @@ path = "examples/iced-indicator/src/main.rs"
 [[example]]
 name = "gpui-example"
 path = "examples/gpui-example/src/main.rs"
-[[example]]
-name = "macroquad-example"
-path = "examples/macroquad-example/src/main.rs"
 
 [[example]]
 name = "macroquad-example"
