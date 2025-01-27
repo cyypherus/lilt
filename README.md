@@ -5,7 +5,7 @@
 ![rust](https://github.com/ejjonny/lilt/actions/workflows/rust.yml/badge.svg)
 [![coverage](https://codecov.io/github/ejjonny/lilt/main/graph/badge.svg?token=4XJNXRSQNX)](https://codecov.io/github/ejjonny/lilt)
 [![crates.io](https://img.shields.io/crates/v/lilt.svg)](https://crates.io/crates/lilt)
-[![docs.rs](https://img.shields.io/badge/docs.rs-lilt-blue?style=flat-square&logo=docs.rs)](https://docs.rs/lilt)
+[![docs.rs](https://img.shields.io/badge/docs.rs-lilt-blue?logo=docs.rs)](https://docs.rs/lilt)
 [![downloads](https://img.shields.io/crates/d/lilt.svg)](https://crates.io/crates/lilt)
 [![license](https://img.shields.io/crates/l/lilt.svg)](https://github.com/lilt/blob/master/LICENSE)
 
