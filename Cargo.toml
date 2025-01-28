@@ -12,6 +12,7 @@ authors = ["ejjonny"]
 crate-type = ["lib"]
 
 [features]
+# If feature is enabled the implementation of `AnimationTime` is switched from `std::time::Instant` to `web-time::Instant`.
 wasm = ["dep:web-time"]
 
 [[example]]
