@@ -11,25 +11,28 @@ authors = ["ejjonny"]
 [lib]
 crate-type = ["lib"]
 
+[features]
+examples = []
+
 [[example]]
 name = "iced-minimal"
 path = "examples/iced-minimal/src/main.rs"
+required-features = ["examples"]
 
 [[example]]
 name = "iced-demo"
 path = "examples/iced-demo/src/main.rs"
+required-features = ["examples"]
 
 [[example]]
 name = "iced-indicator"
 path = "examples/iced-indicator/src/main.rs"
-
-[[example]]
-name = "gpui-example"
-path = "examples/gpui-example/src/main.rs"
+required-features = ["examples"]
 
 [[example]]
 name = "macroquad-example"
 path = "examples/macroquad-example/src/main.rs"
+required-features = ["examples"]
 
 [dev-dependencies]
 iced = { git = "https://github.com/iced-rs/iced", rev = "169667ef1b4fa754ed1edb5fa0e845aede2638fb", features = [
@@ -38,9 +41,6 @@ iced = { git = "https://github.com/iced-rs/iced", rev = "169667ef1b4fa754ed1edb5
     "svg",
 ] }
 macroquad = "0.4.13"
-
-[target.'cfg(target_os = "macos")'.dev-dependencies]
-gpui = { git = "https://github.com/zed-industries/zed", rev = "5b1ea7eda0bba40e222f7d904ec65e5848f45eee" }
 
 [dependencies]
 web-time = "1.1.0"
