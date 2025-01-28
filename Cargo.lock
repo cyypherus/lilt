@@ -3311,6 +3311,7 @@ dependencies = [
  "gpui",
  "iced",
  "macroquad",
+ "web-time",
 ]
 
 [[package]]
