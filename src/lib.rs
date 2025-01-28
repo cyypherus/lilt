@@ -1,4 +1,5 @@
 mod animated;
+mod public_api_test;
 pub use animated::Animated;
 pub use animated::Easing;
 mod traits;
