@@ -9,7 +9,7 @@
 [![downloads](https://img.shields.io/crates/d/lilt.svg)](https://crates.io/crates/lilt)
 [![license](https://img.shields.io/crates/l/lilt.svg)](https://github.com/lilt/blob/master/LICENSE)
 
-A simple, dependency free library for running interruptable, transition based animations as a function of time.
+A simple library for running interruptable, transition based animations as a function of time.
 
 This library only implements animations & would be most useful along with a GUI library that can do GUI things (like [iced](https://github.com/iced-rs/iced)).
 
