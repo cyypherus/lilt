@@ -1,10 +1,11 @@
 name: "Snapshot Commit"
 
 on:
-  pull_request_review_comment:
+  issue_comment:
     types: [created]
 
 permissions:
+  issues: read
   contents: write # Allow writing to the repo
   pull-requests: write # Allow interaction with PRs
 
