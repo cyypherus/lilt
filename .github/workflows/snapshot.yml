@@ -1,7 +1,7 @@
 name: "Snapshot Commit"
 
 on:
-  issue_comment:
+  pull_request_review_comment:
     types: [created]
 
 permissions:
@@ -40,17 +40,16 @@ jobs:
           ref: ${{ github.event.issue.pull_request.head.ref }}
           repository: ${{ github.repository }}
 
-      - name: Make changes to the specific file
+      - name: Insta
         run: |
-          echo "Snapshot taken at $(date)" > snapshot.txt
+          set -euxo pipefail
 
-      - name: Commit changes
-        run: |
+          cargo install cargo-insta
+          cargo insta test
+          cargo insta accept
+
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add snapshot.txt
-          git commit -m "Update snapshot.txt"
-
-      - name: Push changes to PR
-        run: |
+          git commit -m "[bot] Update snapshots"
           git push
