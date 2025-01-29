@@ -3,11 +3,17 @@ name: "Snapshot Commit"
 on:
   issue_comment:
     types: [created]
+  pull_request:
+    branches: ["main"]
 
 permissions:
   issues: read
   contents: write # Allow writing to the repo
   pull-requests: write # Allow interaction with PRs
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   snapshot:
