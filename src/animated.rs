@@ -628,6 +628,7 @@ impl Easing {
     }
 }
 
+#[cfg(not(feature = "test-api"))]
 #[cfg(test)]
 mod tests {
     use super::*;

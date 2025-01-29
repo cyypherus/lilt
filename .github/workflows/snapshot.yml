@@ -1,0 +1,56 @@
+name: "Snapshot Commit"
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write # Allow writing to the repo
+  pull-requests: write # Allow interaction with PRs
+
+jobs:
+  snapshot:
+    if: ${{ github.event.comment.body == '/snapshot' && github.event.issue.pull_request }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check if comment author is a collaborator
+        run: |
+          AUTHOR="${{ github.actor }}"
+          REPO="${{ github.repository }}"
+
+          # Call the API and capture headers
+          RESPONSE=$(gh api \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            --include \
+            /repos/$REPO/collaborators/$AUTHOR 2>/dev/null)
+
+          # Extract the HTTP status code from the response headers
+          STATUS=$(echo "$RESPONSE" | grep HTTP | awk '{print $2}')
+
+          if [[ "$STATUS" != "204" ]]; then
+            echo "Unauthorized user: $AUTHOR"
+            exit 1
+          fi
+
+      - name: Checkout PR branch
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.issue.pull_request.head.ref }}
+          repository: ${{ github.repository }}
+
+      - name: Make changes to the specific file
+        run: |
+          echo "Snapshot taken at $(date)" > snapshot.txt
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add snapshot.txt
+          git commit -m "Update snapshot.txt"
+
+      - name: Push changes to PR
+        run: |
+          git push

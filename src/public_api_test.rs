@@ -1,3 +1,4 @@
+#[cfg(feature = "test-api")]
 #[test]
 fn public_api() {
     // Install a compatible nightly toolchain if it is missing

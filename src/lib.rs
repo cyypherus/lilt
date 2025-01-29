@@ -1,4 +1,5 @@
 mod animated;
+#[cfg(feature = "test-api")]
 mod public_api_test;
 pub use animated::Animated;
 pub use animated::Easing;
