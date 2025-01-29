@@ -5,7 +5,7 @@ use crate::traits::{AnimationTime, FloatRepresentable, Interpolable};
 ///
 /// ```rust
 /// use lilt::Animated;
-/// use iced::time::Instant;
+/// use std::time::Instant;
 ///
 /// struct MyViewState {
 ///     animated_toggle: Animated<bool, Instant>,
