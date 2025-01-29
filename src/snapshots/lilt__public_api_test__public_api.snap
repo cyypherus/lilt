@@ -1,0 +1,154 @@
+---
+source: src/public_api_test.rs
+expression: public_api
+---
+pub mod lilt
+pub enum lilt::Easing
+pub lilt::Easing::Custom(fn(f32) -> f32)
+pub lilt::Easing::EaseIn
+pub lilt::Easing::EaseInBack
+pub lilt::Easing::EaseInBounce
+pub lilt::Easing::EaseInCirc
+pub lilt::Easing::EaseInCubic
+pub lilt::Easing::EaseInElastic
+pub lilt::Easing::EaseInExpo
+pub lilt::Easing::EaseInOut
+pub lilt::Easing::EaseInOutBack
+pub lilt::Easing::EaseInOutBounce
+pub lilt::Easing::EaseInOutCirc
+pub lilt::Easing::EaseInOutCubic
+pub lilt::Easing::EaseInOutElastic
+pub lilt::Easing::EaseInOutExpo
+pub lilt::Easing::EaseInOutQuad
+pub lilt::Easing::EaseInOutQuart
+pub lilt::Easing::EaseInOutQuint
+pub lilt::Easing::EaseInQuad
+pub lilt::Easing::EaseInQuart
+pub lilt::Easing::EaseInQuint
+pub lilt::Easing::EaseOut
+pub lilt::Easing::EaseOutBack
+pub lilt::Easing::EaseOutBounce
+pub lilt::Easing::EaseOutCirc
+pub lilt::Easing::EaseOutCubic
+pub lilt::Easing::EaseOutElastic
+pub lilt::Easing::EaseOutExpo
+pub lilt::Easing::EaseOutQuad
+pub lilt::Easing::EaseOutQuart
+pub lilt::Easing::EaseOutQuint
+pub lilt::Easing::Linear
+impl lilt::Easing
+pub fn lilt::Easing::value(self, x: f32) -> f32
+impl core::clone::Clone for lilt::Easing
+pub fn lilt::Easing::clone(&self) -> lilt::Easing
+impl core::cmp::PartialEq for lilt::Easing
+pub fn lilt::Easing::eq(&self, other: &lilt::Easing) -> bool
+impl core::default::Default for lilt::Easing
+pub fn lilt::Easing::default() -> lilt::Easing
+impl core::fmt::Debug for lilt::Easing
+pub fn lilt::Easing::fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result
+impl core::marker::Copy for lilt::Easing
+impl core::marker::StructuralPartialEq for lilt::Easing
+impl core::marker::Freeze for lilt::Easing
+impl core::marker::Send for lilt::Easing
+impl core::marker::Sync for lilt::Easing
+impl core::marker::Unpin for lilt::Easing
+impl core::panic::unwind_safe::RefUnwindSafe for lilt::Easing
+impl core::panic::unwind_safe::UnwindSafe for lilt::Easing
+impl<T, U> core::convert::Into<U> for lilt::Easing where U: core::convert::From<T>
+pub fn lilt::Easing::into(self) -> U
+impl<T, U> core::convert::TryFrom<U> for lilt::Easing where U: core::convert::Into<T>
+pub type lilt::Easing::Error = core::convert::Infallible
+pub fn lilt::Easing::try_from(value: U) -> core::result::Result<T, <T as core::convert::TryFrom<U>>::Error>
+impl<T, U> core::convert::TryInto<U> for lilt::Easing where U: core::convert::TryFrom<T>
+pub type lilt::Easing::Error = <U as core::convert::TryFrom<T>>::Error
+pub fn lilt::Easing::try_into(self) -> core::result::Result<U, <U as core::convert::TryFrom<T>>::Error>
+impl<T> alloc::borrow::ToOwned for lilt::Easing where T: core::clone::Clone
+pub type lilt::Easing::Owned = T
+pub fn lilt::Easing::clone_into(&self, target: &mut T)
+pub fn lilt::Easing::to_owned(&self) -> T
+impl<T> core::any::Any for lilt::Easing where T: 'static + ?core::marker::Sized
+pub fn lilt::Easing::type_id(&self) -> core::any::TypeId
+impl<T> core::borrow::Borrow<T> for lilt::Easing where T: ?core::marker::Sized
+pub fn lilt::Easing::borrow(&self) -> &T
+impl<T> core::borrow::BorrowMut<T> for lilt::Easing where T: ?core::marker::Sized
+pub fn lilt::Easing::borrow_mut(&mut self) -> &mut T
+impl<T> core::clone::CloneToUninit for lilt::Easing where T: core::clone::Clone
+pub unsafe fn lilt::Easing::clone_to_uninit(&self, dst: *mut u8)
+impl<T> core::convert::From<T> for lilt::Easing
+pub fn lilt::Easing::from(t: T) -> T
+pub struct lilt::Animated<T, Time> where T: lilt::FloatRepresentable + core::clone::Clone + core::marker::Copy + core::cmp::PartialEq, Time: lilt::AnimationTime
+pub lilt::Animated::value: T
+impl<T, Time> lilt::Animated<T, Time> where T: lilt::FloatRepresentable + core::clone::Clone + core::marker::Copy + core::cmp::PartialEq + lilt::Interpolable, Time: lilt::AnimationTime
+pub fn lilt::Animated<T, Time>::animate_wrapped(&self, time: Time) -> T
+impl<T, Time> lilt::Animated<T, Time> where T: lilt::FloatRepresentable + core::clone::Clone + core::marker::Copy + core::cmp::PartialEq, Time: lilt::AnimationTime
+pub fn lilt::Animated<T, Time>::animate<I>(&self, map: impl core::ops::function::Fn(T) -> I, time: Time) -> I where I: lilt::Interpolable
+pub fn lilt::Animated<T, Time>::asymmetric_duration(self, duration_ms: f32) -> Self
+pub fn lilt::Animated<T, Time>::asymmetric_easing(self, easing: lilt::Easing) -> Self
+pub fn lilt::Animated<T, Time>::auto_reverse(self) -> Self
+pub fn lilt::Animated<T, Time>::auto_start(self, new_value: T, at: Time) -> Self
+pub fn lilt::Animated<T, Time>::delay(self, delay_ms: f32) -> Self
+pub fn lilt::Animated<T, Time>::duration(self, duration_ms: f32) -> Self
+pub fn lilt::Animated<T, Time>::easing(self, easing: lilt::Easing) -> Self
+pub fn lilt::Animated<T, Time>::in_progress(&self, time: Time) -> bool
+pub fn lilt::Animated<T, Time>::new(value: T) -> Self
+pub fn lilt::Animated<T, Time>::new_with_settings(value: T, duration_ms: f32, easing: lilt::Easing) -> Self
+pub fn lilt::Animated<T, Time>::repeat(self, count: u32) -> Self
+pub fn lilt::Animated<T, Time>::repeat_forever(self) -> Self
+pub fn lilt::Animated<T, Time>::transition(&mut self, new_value: T, at: Time)
+pub fn lilt::Animated<T, Time>::transition_instantaneous(&mut self, new_value: T, at: Time)
+impl<T, Time> lilt::Animated<T, Time> where T: lilt::FloatRepresentable + core::clone::Clone + core::marker::Copy + core::cmp::PartialEq, Time: lilt::AnimationTime
+pub fn lilt::Animated<T, Time>::animate_if_eq<I>(&self, value: T, equal: I, default: I, time: Time) -> I where I: lilt::Interpolable + core::clone::Clone
+impl<Time> lilt::Animated<bool, Time> where Time: lilt::AnimationTime
+pub fn lilt::Animated<bool, Time>::animate_bool<I>(&self, false_value: I, true_value: I, time: Time) -> I where I: lilt::Interpolable + core::clone::Clone
+impl<T, Time> core::clone::Clone for lilt::Animated<T, Time> where T: lilt::FloatRepresentable + core::clone::Clone + core::marker::Copy + core::cmp::PartialEq + core::clone::Clone, Time: lilt::AnimationTime + core::clone::Clone
+pub fn lilt::Animated<T, Time>::clone(&self) -> lilt::Animated<T, Time>
+impl<T, Time> core::default::Default for lilt::Animated<T, Time> where T: lilt::FloatRepresentable + core::clone::Clone + core::marker::Copy + core::cmp::PartialEq + core::default::Default, Time: lilt::AnimationTime + core::default::Default
+pub fn lilt::Animated<T, Time>::default() -> lilt::Animated<T, Time>
+impl<T, Time> core::fmt::Debug for lilt::Animated<T, Time> where T: lilt::FloatRepresentable + core::clone::Clone + core::marker::Copy + core::cmp::PartialEq + core::fmt::Debug, Time: lilt::AnimationTime + core::fmt::Debug
+pub fn lilt::Animated<T, Time>::fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result
+impl<T, Time> core::marker::Freeze for lilt::Animated<T, Time> where T: core::marker::Freeze, Time: core::marker::Freeze
+impl<T, Time> core::marker::Send for lilt::Animated<T, Time> where T: core::marker::Send
+impl<T, Time> core::marker::Sync for lilt::Animated<T, Time> where T: core::marker::Sync, Time: core::marker::Sync
+impl<T, Time> core::marker::Unpin for lilt::Animated<T, Time> where T: core::marker::Unpin, Time: core::marker::Unpin
+impl<T, Time> core::panic::unwind_safe::RefUnwindSafe for lilt::Animated<T, Time> where T: core::panic::unwind_safe::RefUnwindSafe, Time: core::panic::unwind_safe::RefUnwindSafe
+impl<T, Time> core::panic::unwind_safe::UnwindSafe for lilt::Animated<T, Time> where T: core::panic::unwind_safe::UnwindSafe, Time: core::panic::unwind_safe::UnwindSafe
+impl<T, U> core::convert::Into<U> for lilt::Animated<T, Time> where U: core::convert::From<T>
+pub fn lilt::Animated<T, Time>::into(self) -> U
+impl<T, U> core::convert::TryFrom<U> for lilt::Animated<T, Time> where U: core::convert::Into<T>
+pub type lilt::Animated<T, Time>::Error = core::convert::Infallible
+pub fn lilt::Animated<T, Time>::try_from(value: U) -> core::result::Result<T, <T as core::convert::TryFrom<U>>::Error>
+impl<T, U> core::convert::TryInto<U> for lilt::Animated<T, Time> where U: core::convert::TryFrom<T>
+pub type lilt::Animated<T, Time>::Error = <U as core::convert::TryFrom<T>>::Error
+pub fn lilt::Animated<T, Time>::try_into(self) -> core::result::Result<U, <U as core::convert::TryFrom<T>>::Error>
+impl<T> alloc::borrow::ToOwned for lilt::Animated<T, Time> where T: core::clone::Clone
+pub type lilt::Animated<T, Time>::Owned = T
+pub fn lilt::Animated<T, Time>::clone_into(&self, target: &mut T)
+pub fn lilt::Animated<T, Time>::to_owned(&self) -> T
+impl<T> core::any::Any for lilt::Animated<T, Time> where T: 'static + ?core::marker::Sized
+pub fn lilt::Animated<T, Time>::type_id(&self) -> core::any::TypeId
+impl<T> core::borrow::Borrow<T> for lilt::Animated<T, Time> where T: ?core::marker::Sized
+pub fn lilt::Animated<T, Time>::borrow(&self) -> &T
+impl<T> core::borrow::BorrowMut<T> for lilt::Animated<T, Time> where T: ?core::marker::Sized
+pub fn lilt::Animated<T, Time>::borrow_mut(&mut self) -> &mut T
+impl<T> core::clone::CloneToUninit for lilt::Animated<T, Time> where T: core::clone::Clone
+pub unsafe fn lilt::Animated<T, Time>::clone_to_uninit(&self, dst: *mut u8)
+impl<T> core::convert::From<T> for lilt::Animated<T, Time>
+pub fn lilt::Animated<T, Time>::from(t: T) -> T
+pub trait lilt::AnimationTime: core::marker::Copy + core::fmt::Debug + core::marker::Send
+pub fn lilt::AnimationTime::elapsed_since(self, time: Self) -> f32
+impl lilt::AnimationTime for f32
+pub fn f32::elapsed_since(self, time: Self) -> f32
+impl lilt::AnimationTime for std::time::Instant
+pub fn std::time::Instant::elapsed_since(self, time: Self) -> f32
+pub trait lilt::FloatRepresentable
+pub fn lilt::FloatRepresentable::float_value(&self) -> f32
+impl lilt::FloatRepresentable for bool
+pub fn bool::float_value(&self) -> f32
+impl lilt::FloatRepresentable for f32
+pub fn f32::float_value(&self) -> f32
+pub trait lilt::Interpolable
+pub fn lilt::Interpolable::interpolated(&self, other: Self, ratio: f32) -> Self
+impl lilt::Interpolable for f32
+pub fn f32::interpolated(&self, other: Self, ratio: f32) -> Self
+impl<T> lilt::Interpolable for core::option::Option<T> where T: lilt::Interpolable + core::marker::Copy
+pub fn core::option::Option<T>::interpolated(&self, other: Self, ratio: f32) -> Self

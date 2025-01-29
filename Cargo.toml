@@ -12,35 +12,44 @@ authors = ["ejjonny"]
 crate-type = ["lib"]
 
 [features]
-examples = []
+iced-examples = ["iced"]
+macroquad-examples = ["macroquad"]
+test-api = []
 
 [[example]]
 name = "iced-minimal"
 path = "examples/iced-minimal/src/main.rs"
-required-features = ["examples"]
+required-features = ["iced-examples"]
 
 [[example]]
 name = "iced-demo"
 path = "examples/iced-demo/src/main.rs"
-required-features = ["examples"]
+required-features = ["iced-examples"]
 
 [[example]]
 name = "iced-indicator"
 path = "examples/iced-indicator/src/main.rs"
-required-features = ["examples"]
+required-features = ["iced-examples"]
 
 [[example]]
 name = "macroquad-example"
 path = "examples/macroquad-example/src/main.rs"
-required-features = ["examples"]
+required-features = ["macroquad-examples"]
 
 [dev-dependencies]
+insta = "1.42.1"
+public-api = "0.43.0"
+rustdoc-json = "0.9.4"
+rustup-toolchain = "0.1.9"
+
+[dependencies]
+web-time = "1.1.0"
+
+# Example dependencies - dev dependencies can't currently be optional,
+# but examples are behind the "examples" feature
 iced = { git = "https://github.com/iced-rs/iced", rev = "169667ef1b4fa754ed1edb5fa0e845aede2638fb", features = [
     "canvas",
     "tokio",
     "svg",
-] }
-macroquad = "0.4.13"
-
-[dependencies]
-web-time = "1.1.0"
+], optional = true }
+macroquad = { version = "0.4.13", optional = true }
