@@ -12,7 +12,6 @@ authors = ["cyypherus"]
 crate-type = ["lib"]
 
 [features]
-default = ["test-api"]
 iced-examples = ["iced"]
 macroquad-examples = ["macroquad"]
 test-api = []
