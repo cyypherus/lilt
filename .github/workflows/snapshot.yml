@@ -33,7 +33,7 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             --include \
-            /repos/$REPO/collaborators/$AUTHOR 2>/dev/null)
+            /repos/$REPO/collaborators/$AUTHOR)
 
           # Extract the HTTP status code from the response headers
           STATUS=$(echo "$RESPONSE" | grep HTTP | awk '{print $2}')
