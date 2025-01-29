@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: Check if comment author is a collaborator
         run: |
+          set -euxo pipefail
+
           AUTHOR="${{ github.actor }}"
           REPO="${{ github.repository }}"
 
