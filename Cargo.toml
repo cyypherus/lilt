@@ -35,14 +35,16 @@ name = "macroquad-example"
 path = "examples/macroquad-example/src/main.rs"
 required-features = ["examples"]
 
-[dev-dependencies]
+[target.'cfg(feature = "examples")'.dev-dependencies]
 iced = { git = "https://github.com/iced-rs/iced", rev = "169667ef1b4fa754ed1edb5fa0e845aede2638fb", features = [
     "canvas",
     "tokio",
     "svg",
 ] }
-insta = "1.42.1"
 macroquad = "0.4.13"
+
+[dev-dependencies]
+insta = "1.42.1"
 public-api = "0.43.0"
 rustdoc-json = "0.9.4"
 rustup-toolchain = "0.1.9"
