@@ -75,3 +75,12 @@ lilt animations are fully independent of frame rate or tick frequency & only nee
 ## [Examples](examples/)
 
 ![indicator](https://github.com/ejjonny/lilt/assets/17223924/e4f81d63-67a4-4586-a2cf-309c687fd59d)
+
+### Contributing
+
+This repo uses `cargo insta` to snapshot test the public API.
+
+If your PR changes the public API, one of the checks will fail by default.
+
+If the changes to the public API were intentional you can update the snapshot by running:
+`INSTA_UPDATE=always && cargo test --features test-api`

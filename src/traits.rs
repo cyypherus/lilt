@@ -27,8 +27,6 @@ pub trait FloatRepresentable {
     fn float_value(&self) -> f32;
 }
 
-pub struct TestStruct {}
-
 impl FloatRepresentable for bool {
     fn float_value(&self) -> f32 {
         if *self {

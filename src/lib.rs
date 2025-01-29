@@ -7,4 +7,3 @@ mod traits;
 pub use traits::AnimationTime;
 pub use traits::FloatRepresentable;
 pub use traits::Interpolable;
-pub use traits::TestStruct;

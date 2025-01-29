@@ -3,15 +3,16 @@ name = "lilt"
 version = "0.8.0"
 edition = "2021"
 description = "A simple, dependency free library for running interruptable, transition based animations as a function of time."
-repository = "https://github.com/ejjonny/lilt"
+repository = "https://github.com/cyypherus/lilt"
 license = "MIT"
 keywords = ["animation", "interpolation"]
-authors = ["ejjonny"]
+authors = ["cyypherus"]
 
 [lib]
 crate-type = ["lib"]
 
 [features]
+default = ["test-api"]
 iced-examples = ["iced"]
 macroquad-examples = ["macroquad"]
 test-api = []
