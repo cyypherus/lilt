@@ -46,7 +46,7 @@ rustup-toolchain = "0.1.9"
 web-time = "1.1.0"
 
 # Example dependencies - dev dependencies can't currently be optional,
-# but examples are behind the "examples" feature
+# but examples are behind the examples features
 iced = { git = "https://github.com/iced-rs/iced", rev = "169667ef1b4fa754ed1edb5fa0e845aede2638fb", features = [
     "canvas",
     "tokio",

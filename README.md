@@ -83,4 +83,5 @@ This repo uses `cargo insta` to snapshot test the public API.
 If your PR changes the public API, one of the checks will fail by default.
 
 If the changes to the public API were intentional you can update the snapshot by running:
+
 `INSTA_UPDATE=always && cargo test --features test-api`
