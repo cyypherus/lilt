@@ -43,11 +43,7 @@ jobs:
             exit 1
           fi
 
-      - name: Checkout PR branch
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.issue.pull_request.head.ref }}
-          repository: ${{ github.repository }}
+      - uses: actions/checkout@v4
 
       - name: Insta
         run: |
