@@ -53,7 +53,7 @@ jobs:
           set -euxo pipefail
 
           cargo install cargo-insta
-          cargo insta test --features test-api
+          cargo insta test --features test-api || true
           cargo insta accept
 
           git config --global user.name "github-actions[bot]"
