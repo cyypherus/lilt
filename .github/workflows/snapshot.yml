@@ -3,13 +3,11 @@ name: "Snapshot Commit"
 on:
   issue_comment:
     types: [created]
-  pull_request:
-    branches: ["main"]
 
 permissions:
   issues: read
-  contents: write # Allow writing to the repo
-  pull-requests: write # Allow interaction with PRs
+  contents: write
+  pull-requests: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -45,18 +43,17 @@ jobs:
             exit 1
           fi
 
-      - name: Checkout PR branch
+      - name: Checkout pull request 🏁
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.issue.pull_request.head.ref }}
-          repository: ${{ github.repository }}
+          ref: refs/pull/${{ github.event.issue.number }}
 
       - name: Insta
         run: |
           set -euxo pipefail
 
           cargo install cargo-insta
-          cargo insta test
+          cargo insta test --features test-api || true
           cargo insta accept
 
           git config --global user.name "github-actions[bot]"
