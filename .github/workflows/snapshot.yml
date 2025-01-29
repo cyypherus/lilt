@@ -22,6 +22,8 @@ jobs:
 
     steps:
       - name: Check if comment author is a collaborator
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euxo pipefail
 
