@@ -479,26 +479,27 @@ pub enum Easing {
 
 impl Easing {
     pub fn value(self, x: f32) -> f32 {
-        let pi = std::f32::consts::PI;
+        const PI: f32 = std::f32::consts::PI;
+
         match self {
             Easing::Linear => x,
-            Easing::EaseIn => 1.0 - f32::cos((x * pi) / 2.0),
-            Easing::EaseOut => f32::sin((x * pi) / 2.0),
-            Easing::EaseInOut => -(f32::cos(pi * x) - 1.0) / 2.0,
-            Easing::EaseInQuad => x * x,
+            Easing::EaseIn => 1.0 - f32::cos((x * PI) / 2.0),
+            Easing::EaseOut => f32::sin((x * PI) / 2.0),
+            Easing::EaseInOut => -(f32::cos(PI * x) - 1.0) / 2.0,
+            Easing::EaseInQuad => x.powi(2),
             Easing::EaseOutQuad => 1.0 - (1.0 - x) * (1.0 - x),
             Easing::EaseInOutQuad => {
                 if x < 0.5 {
-                    2.0 * x * x
+                    2.0 * x.powi(2)
                 } else {
                     1.0 - (-2.0 * x + 2.0).powi(2) / 2.0
                 }
             }
-            Easing::EaseInCubic => x * x * x,
+            Easing::EaseInCubic => x.powi(3),
             Easing::EaseOutCubic => 1.0 - (1.0 - x).powi(3),
             Easing::EaseInOutCubic => {
                 if x < 0.5 {
-                    4.0 * x * x * x
+                    4.0 * x.powi(3)
                 } else {
                     1.0 - (-2.0 * x + 2.0).powi(3) / 2.0
                 }
@@ -507,16 +508,16 @@ impl Easing {
             Easing::EaseOutQuart => 1.0 - (1.0 - x).powi(4),
             Easing::EaseInOutQuart => {
                 if x < 0.5 {
-                    8.0 * x * x * x * x
+                    8.0 * x.powi(4)
                 } else {
                     1.0 - (-2.0 * x + 2.0).powi(4) / 2.0
                 }
             }
-            Easing::EaseInQuint => x * x * x * x * x,
+            Easing::EaseInQuint => x.powi(5),
             Easing::EaseOutQuint => 1.0 - (1.0 - x).powi(5),
             Easing::EaseInOutQuint => {
                 if x < 0.5 {
-                    16.0 * x * x * x * x * x
+                    16.0 * x.powi(5)
                 } else {
                     1.0 - (-2.0 * x + 2.0).powi(5) / 2.0
                 }
@@ -541,7 +542,7 @@ impl Easing {
                 x if x < 0.5 => (2.0_f32).powf(20.0 * x - 10.0) / 2.0,
                 _ => (2.0 - (2.0_f32).powf(-20.0 * x + 10.0)) / 2.0,
             },
-            Easing::EaseInCirc => 1.0 - (1.0 - x * x).sqrt(),
+            Easing::EaseInCirc => 1.0 - (1.0 - x.powi(2)).sqrt(),
             Easing::EaseOutCirc => (1.0 - (x - 1.0).powi(2)).sqrt(),
             Easing::EaseInOutCirc => {
                 if x < 0.5 {
@@ -551,69 +552,76 @@ impl Easing {
                 }
             }
             Easing::EaseInBack => {
-                let c1 = 1.70158;
-                let c3 = c1 + 1.0;
-                c3 * x * x * x - c1 * x * x
+                const C1: f32 = 1.70158;
+                const C3: f32 = C1 + 1.0;
+
+                C3 * x.powi(3) - C1 * x.powi(2)
             }
             Easing::EaseOutBack => {
-                let c1 = 1.70158;
-                let c3 = c1 + 1.0;
-                1.0 + c3 * (x - 1.0).powi(3) + c1 * (x - 1.0).powi(2)
+                const C1: f32 = 1.70158;
+                const C3: f32 = C1 + 1.0;
+
+                1.0 + C3 * (x - 1.0).powi(3) + C1 * (x - 1.0).powi(2)
             }
             Easing::EaseInOutBack => {
-                let c1 = 1.70158;
-                let c2 = c1 * 1.525;
+                const C1: f32 = 1.70158;
+                const C2: f32 = C1 * 1.525;
+
                 if x < 0.5 {
-                    ((2.0 * x).powi(2) * ((c2 + 1.0) * 2.0 * x - c2)) / 2.0
+                    ((2.0 * x).powi(2) * ((C2 + 1.0) * 2.0 * x - C2)) / 2.0
                 } else {
-                    ((2.0 * x - 2.0).powi(2) * ((c2 + 1.0) * (x * 2.0 - 2.0) + c2) + 2.0) / 2.0
+                    ((2.0 * x - 2.0).powi(2) * ((C2 + 1.0) * (x * 2.0 - 2.0) + C2) + 2.0) / 2.0
                 }
             }
             Easing::EaseInElastic => {
-                let c4 = (2.0 * pi) / 3.0;
+                const C4: f32 = (2.0 * PI) / 3.0;
+
                 if x == 0.0 {
                     0.0
                 } else if x == 1.0 {
                     1.0
                 } else {
-                    -(2.0_f32.powf(10.0 * x - 10.0)) * f32::sin((x * 10.0 - 10.75) * c4)
+                    -(2.0_f32.powf(10.0 * x - 10.0)) * f32::sin((x * 10.0 - 10.75) * C4)
                 }
             }
             Easing::EaseOutElastic => {
-                let c4 = (2.0 * pi) / 3.0;
+                const C4: f32 = (2.0 * PI) / 3.0;
+
                 if x == 0.0 {
                     0.0
                 } else if x == 1.0 {
                     1.0
                 } else {
-                    2.0_f32.powf(-10.0 * x) * f32::sin((x * 10.0 - 0.75) * c4) + 1.0
+                    2.0_f32.powf(-10.0 * x) * f32::sin((x * 10.0 - 0.75) * C4) + 1.0
                 }
             }
             Easing::EaseInOutElastic => {
-                let c5 = (2.0 * pi) / 4.5;
+                const C5: f32 = (2.0 * PI) / 4.5;
+
                 if x == 0.0 {
                     0.0
                 } else if x == 1.0 {
                     1.0
                 } else if x < 0.5 {
-                    -(2.0_f32.powf(20.0 * x - 10.0) * f32::sin((20.0 * x - 11.125) * c5)) / 2.0
+                    -(2.0_f32.powf(20.0 * x - 10.0) * f32::sin((20.0 * x - 11.125) * C5)) / 2.0
                 } else {
-                    (2.0_f32.powf(-20.0 * x + 10.0) * f32::sin((20.0 * x - 11.125) * c5)) / 2.0
+                    (2.0_f32.powf(-20.0 * x + 10.0) * f32::sin((20.0 * x - 11.125) * C5)) / 2.0
                         + 1.0
                 }
             }
             Easing::EaseInBounce => 1.0 - Self::EaseOutBounce.value(1.0 - x),
             Easing::EaseOutBounce => {
-                let n1 = 7.5625;
-                let d1 = 2.75;
-                if x < 1.0 / d1 {
-                    n1 * x * x
-                } else if x < 2.0 / d1 {
-                    n1 * (x - 1.5 / d1).powi(2) + 0.75
-                } else if x < 2.5 / d1 {
-                    n1 * (x - 2.25 / d1).powi(2) + 0.9375
+                const N1: f32 = 7.5625;
+                const D1: f32 = 2.75;
+
+                if x < 1.0 / D1 {
+                    N1 * x.powi(2)
+                } else if x < 2.0 / D1 {
+                    N1 * (x - 1.5 / D1).powi(2) + 0.75
+                } else if x < 2.5 / D1 {
+                    N1 * (x - 2.25 / D1).powi(2) + 0.9375
                 } else {
-                    n1 * (x - 2.625 / d1).powi(2) + 0.984375
+                    N1 * (x - 2.625 / D1).powi(2) + 0.984375
                 }
             }
             Easing::EaseInOutBounce => {
@@ -716,7 +724,7 @@ mod tests {
 
     #[test]
     fn test_custom_easing() {
-        let custom_ease = Easing::Custom(|x| x * x); // Quadratic ease-in
+        let custom_ease = Easing::Custom(|x| x.powi(2)); // Quadratic ease-in
         assert_eq!(custom_ease.value(0.0), 0.0);
         assert_eq!(custom_ease.value(0.5), 0.25);
         assert_eq!(custom_ease.value(1.0), 1.0);
@@ -1132,7 +1140,7 @@ mod tests {
 
     #[test]
     fn test_animate_with_custom_easing() {
-        let custom_ease = Easing::Custom(|x| x * x); // Quadratic ease-in
+        let custom_ease = Easing::Custom(|x| x.powi(2)); // Quadratic ease-in
         let mut anim = Animated::new(0.0f32).duration(1000.0).easing(custom_ease);
         anim.transition(10.0, 0.0);
 
