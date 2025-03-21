@@ -1,11 +1,11 @@
 [package]
 name = "iced-demo"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 
 [dependencies]
 iced = { git = "https://github.com/iced-rs/iced", rev = "169667ef1b4fa754ed1edb5fa0e845aede2638fb", features = [
-    "canvas",
+  "canvas",
 ] }
 lilt = { path = "../../" }
 iced_futures = "0.12.0"
