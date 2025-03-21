@@ -29,11 +29,7 @@ pub trait FloatRepresentable {
 
 impl FloatRepresentable for bool {
     fn float_value(&self) -> f32 {
-        if *self {
-            1.
-        } else {
-            0.
-        }
+        if *self { 1. } else { 0. }
     }
 }
 

@@ -1,12 +1,12 @@
 use iced::font::Weight;
-use iced::widget::canvas::path::lyon_path::geom::euclid::Transform2D;
-use iced::widget::canvas::path::lyon_path::geom::Angle;
-use iced::widget::canvas::path::lyon_path::math::vector;
 use iced::widget::canvas::path::Arc;
+use iced::widget::canvas::path::lyon_path::geom::Angle;
+use iced::widget::canvas::path::lyon_path::geom::euclid::Transform2D;
+use iced::widget::canvas::path::lyon_path::math::vector;
 use iced::widget::canvas::{self, Frame, Geometry, Path, Program, Stroke};
-use iced::widget::{horizontal_space, text, vertical_space, Column, Container, Row, Space, Stack};
+use iced::widget::{Column, Container, Row, Space, Stack, horizontal_space, text, vertical_space};
 use iced::window::frames;
-use iced::{mouse, Color, Font, Point, Rectangle, Renderer, Task};
+use iced::{Color, Font, Point, Rectangle, Renderer, Task, mouse};
 use iced::{Element, Length, Theme};
 use lilt::Animated;
 use lilt::Easing;
@@ -44,7 +44,7 @@ impl Example {
             .map(|i| {
                 Animated::new(false)
                     .duration(800.)
-                    .easing(Easing::EaseInOutBounce)
+                    .easing(Easing::InOutBounce)
                     .delay(i as f32 * 30.)
                     .repeat_forever()
                     .auto_start(true, time)
@@ -55,7 +55,7 @@ impl Example {
             .map(|i| {
                 Animated::new(false)
                     .duration(800.)
-                    .easing(Easing::EaseInOutBounce)
+                    .easing(Easing::InOutBounce)
                     .delay(i as f32 * 30.)
                     .repeat_forever()
                     .auto_start(true, time)

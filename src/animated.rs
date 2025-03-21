@@ -283,7 +283,7 @@ where
             destination: origin,
             settings: AnimationSettings {
                 duration_ms: 100.,
-                easing: Easing::EaseInOut,
+                easing: Easing::InOutSine,
             },
             asymmetric_settings: None,
             delay_ms: 0.,
@@ -444,36 +444,36 @@ struct Progress {
 pub enum Easing {
     #[default]
     Linear,
-    EaseIn,
-    EaseOut,
-    EaseInOut,
-    EaseInQuad,
-    EaseOutQuad,
-    EaseInOutQuad,
-    EaseInCubic,
-    EaseOutCubic,
-    EaseInOutCubic,
-    EaseInQuart,
-    EaseOutQuart,
-    EaseInOutQuart,
-    EaseInQuint,
-    EaseOutQuint,
-    EaseInOutQuint,
-    EaseInExpo,
-    EaseOutExpo,
-    EaseInOutExpo,
-    EaseInCirc,
-    EaseOutCirc,
-    EaseInOutCirc,
-    EaseInBack,
-    EaseOutBack,
-    EaseInOutBack,
-    EaseInElastic,
-    EaseOutElastic,
-    EaseInOutElastic,
-    EaseInBounce,
-    EaseOutBounce,
-    EaseInOutBounce,
+    InSine,
+    OutSine,
+    InOutSine,
+    InQuad,
+    OutQuad,
+    InOutQuad,
+    InCubic,
+    OutCubic,
+    InOutCubic,
+    InQuart,
+    OutQuart,
+    InOutQuart,
+    InQuint,
+    OutQuint,
+    InOutQuint,
+    InExpo,
+    OutExpo,
+    InOutExpo,
+    InCirc,
+    OutCirc,
+    InOutCirc,
+    InBack,
+    OutBack,
+    InOutBack,
+    InElastic,
+    OutElastic,
+    InOutElastic,
+    InBounce,
+    OutBounce,
+    InOutBounce,
     Custom(fn(f32) -> f32),
 }
 
@@ -482,88 +482,88 @@ impl Easing {
         const PI: f32 = std::f32::consts::PI;
 
         match self {
-            Easing::Linear => x,
-            Easing::EaseIn => 1.0 - f32::cos((x * PI) / 2.0),
-            Easing::EaseOut => f32::sin((x * PI) / 2.0),
-            Easing::EaseInOut => -(f32::cos(PI * x) - 1.0) / 2.0,
-            Easing::EaseInQuad => x.powi(2),
-            Easing::EaseOutQuad => 1.0 - (1.0 - x) * (1.0 - x),
-            Easing::EaseInOutQuad => {
+            Self::Linear => x,
+            Self::InSine => 1.0 - f32::cos((x * PI) / 2.0),
+            Self::OutSine => f32::sin((x * PI) / 2.0),
+            Self::InOutSine => -(f32::cos(PI * x) - 1.0) / 2.0,
+            Self::InQuad => x.powi(2),
+            Self::OutQuad => 1.0 - (1.0 - x) * (1.0 - x),
+            Self::InOutQuad => {
                 if x < 0.5 {
                     2.0 * x.powi(2)
                 } else {
                     1.0 - (-2.0 * x + 2.0).powi(2) / 2.0
                 }
             }
-            Easing::EaseInCubic => x.powi(3),
-            Easing::EaseOutCubic => 1.0 - (1.0 - x).powi(3),
-            Easing::EaseInOutCubic => {
+            Self::InCubic => x.powi(3),
+            Self::OutCubic => 1.0 - (1.0 - x).powi(3),
+            Self::InOutCubic => {
                 if x < 0.5 {
                     4.0 * x.powi(3)
                 } else {
                     1.0 - (-2.0 * x + 2.0).powi(3) / 2.0
                 }
             }
-            Easing::EaseInQuart => x.powi(4),
-            Easing::EaseOutQuart => 1.0 - (1.0 - x).powi(4),
-            Easing::EaseInOutQuart => {
+            Self::InQuart => x.powi(4),
+            Self::OutQuart => 1.0 - (1.0 - x).powi(4),
+            Self::InOutQuart => {
                 if x < 0.5 {
                     8.0 * x.powi(4)
                 } else {
                     1.0 - (-2.0 * x + 2.0).powi(4) / 2.0
                 }
             }
-            Easing::EaseInQuint => x.powi(5),
-            Easing::EaseOutQuint => 1.0 - (1.0 - x).powi(5),
-            Easing::EaseInOutQuint => {
+            Self::InQuint => x.powi(5),
+            Self::OutQuint => 1.0 - (1.0 - x).powi(5),
+            Self::InOutQuint => {
                 if x < 0.5 {
                     16.0 * x.powi(5)
                 } else {
                     1.0 - (-2.0 * x + 2.0).powi(5) / 2.0
                 }
             }
-            Easing::EaseInExpo => {
+            Self::InExpo => {
                 if x == 0.0 {
                     0.0
                 } else {
                     (2.0_f32).powf(10.0 * x - 10.0)
                 }
             }
-            Easing::EaseOutExpo => {
+            Self::OutExpo => {
                 if x == 1.0 {
                     1.0
                 } else {
                     1.0 - (2.0_f32).powf(-10.0 * x)
                 }
             }
-            Easing::EaseInOutExpo => match x {
+            Self::InOutExpo => match x {
                 0.0 => 0.0,
                 1.0 => 1.0,
                 x if x < 0.5 => (2.0_f32).powf(20.0 * x - 10.0) / 2.0,
                 _ => (2.0 - (2.0_f32).powf(-20.0 * x + 10.0)) / 2.0,
             },
-            Easing::EaseInCirc => 1.0 - (1.0 - x.powi(2)).sqrt(),
-            Easing::EaseOutCirc => (1.0 - (x - 1.0).powi(2)).sqrt(),
-            Easing::EaseInOutCirc => {
+            Self::InCirc => 1.0 - (1.0 - x.powi(2)).sqrt(),
+            Self::OutCirc => (1.0 - (x - 1.0).powi(2)).sqrt(),
+            Self::InOutCirc => {
                 if x < 0.5 {
                     (1.0 - (1.0 - (2.0 * x).powi(2)).sqrt()) / 2.0
                 } else {
                     (1.0 + (1.0 - (-2.0 * x + 2.0).powi(2)).sqrt()) / 2.0
                 }
             }
-            Easing::EaseInBack => {
+            Self::InBack => {
                 const C1: f32 = 1.70158;
                 const C3: f32 = C1 + 1.0;
 
                 C3 * x.powi(3) - C1 * x.powi(2)
             }
-            Easing::EaseOutBack => {
+            Self::OutBack => {
                 const C1: f32 = 1.70158;
                 const C3: f32 = C1 + 1.0;
 
                 1.0 + C3 * (x - 1.0).powi(3) + C1 * (x - 1.0).powi(2)
             }
-            Easing::EaseInOutBack => {
+            Self::InOutBack => {
                 const C1: f32 = 1.70158;
                 const C2: f32 = C1 * 1.525;
 
@@ -573,7 +573,7 @@ impl Easing {
                     ((2.0 * x - 2.0).powi(2) * ((C2 + 1.0) * (x * 2.0 - 2.0) + C2) + 2.0) / 2.0
                 }
             }
-            Easing::EaseInElastic => {
+            Self::InElastic => {
                 const C4: f32 = (2.0 * PI) / 3.0;
 
                 if x == 0.0 {
@@ -584,7 +584,7 @@ impl Easing {
                     -(2.0_f32.powf(10.0 * x - 10.0)) * f32::sin((x * 10.0 - 10.75) * C4)
                 }
             }
-            Easing::EaseOutElastic => {
+            Self::OutElastic => {
                 const C4: f32 = (2.0 * PI) / 3.0;
 
                 if x == 0.0 {
@@ -595,7 +595,7 @@ impl Easing {
                     2.0_f32.powf(-10.0 * x) * f32::sin((x * 10.0 - 0.75) * C4) + 1.0
                 }
             }
-            Easing::EaseInOutElastic => {
+            Self::InOutElastic => {
                 const C5: f32 = (2.0 * PI) / 4.5;
 
                 if x == 0.0 {
@@ -609,8 +609,8 @@ impl Easing {
                         + 1.0
                 }
             }
-            Easing::EaseInBounce => 1.0 - Self::EaseOutBounce.value(1.0 - x),
-            Easing::EaseOutBounce => {
+            Self::InBounce => 1.0 - Self::OutBounce.value(1.0 - x),
+            Self::OutBounce => {
                 const N1: f32 = 7.5625;
                 const D1: f32 = 2.75;
 
@@ -624,14 +624,14 @@ impl Easing {
                     N1 * (x - 2.625 / D1).powi(2) + 0.984375
                 }
             }
-            Easing::EaseInOutBounce => {
+            Self::InOutBounce => {
                 if x < 0.5 {
-                    (1.0 - Self::EaseOutBounce.value(1.0 - 2.0 * x)) / 2.0
+                    (1.0 - Self::OutBounce.value(1.0 - 2.0 * x)) / 2.0
                 } else {
-                    (1.0 + Self::EaseOutBounce.value(2.0 * x - 1.0)) / 2.0
+                    (1.0 + Self::OutBounce.value(2.0 * x - 1.0)) / 2.0
                 }
             }
-            Easing::Custom(f) => f(x),
+            Self::Custom(f) => f(x),
         }
     }
 }
@@ -685,36 +685,36 @@ mod tests {
     fn visualize_all_easings() {
         let easings = [
             Easing::Linear,
-            Easing::EaseIn,
-            Easing::EaseOut,
-            Easing::EaseInOut,
-            Easing::EaseInQuad,
-            Easing::EaseOutQuad,
-            Easing::EaseInOutQuad,
-            Easing::EaseInCubic,
-            Easing::EaseOutCubic,
-            Easing::EaseInOutCubic,
-            Easing::EaseInQuart,
-            Easing::EaseOutQuart,
-            Easing::EaseInOutQuart,
-            Easing::EaseInQuint,
-            Easing::EaseOutQuint,
-            Easing::EaseInOutQuint,
-            Easing::EaseInExpo,
-            Easing::EaseOutExpo,
-            Easing::EaseInOutExpo,
-            Easing::EaseInCirc,
-            Easing::EaseOutCirc,
-            Easing::EaseInOutCirc,
-            Easing::EaseInBack,
-            Easing::EaseOutBack,
-            Easing::EaseInOutBack,
-            Easing::EaseInElastic,
-            Easing::EaseOutElastic,
-            Easing::EaseInOutElastic,
-            Easing::EaseInBounce,
-            Easing::EaseOutBounce,
-            Easing::EaseInOutBounce,
+            Easing::InSine,
+            Easing::OutSine,
+            Easing::InOutSine,
+            Easing::InQuad,
+            Easing::OutQuad,
+            Easing::InOutQuad,
+            Easing::InCubic,
+            Easing::OutCubic,
+            Easing::InOutCubic,
+            Easing::InQuart,
+            Easing::OutQuart,
+            Easing::InOutQuart,
+            Easing::InQuint,
+            Easing::OutQuint,
+            Easing::InOutQuint,
+            Easing::InExpo,
+            Easing::OutExpo,
+            Easing::InOutExpo,
+            Easing::InCirc,
+            Easing::OutCirc,
+            Easing::InOutCirc,
+            Easing::InBack,
+            Easing::OutBack,
+            Easing::InOutBack,
+            Easing::InElastic,
+            Easing::OutElastic,
+            Easing::InOutElastic,
+            Easing::InBounce,
+            Easing::OutBounce,
+            Easing::InOutBounce,
         ];
 
         for easing in &easings {
@@ -743,7 +743,7 @@ mod tests {
 
     #[test]
     fn test_eased_progress_with_easing() {
-        let mut anim = Animated::new(0.).duration(1000.).easing(Easing::EaseIn);
+        let mut anim = Animated::new(0.).duration(1000.).easing(Easing::InSine);
         anim.transition(10.0, 0.0);
 
         assert_eq!(anim.animate_wrapped(0.0), 0.0);
@@ -753,7 +753,7 @@ mod tests {
 
     #[test]
     fn test_in_progress() {
-        let mut anim = Animated::new(0.).duration(1000.).easing(Easing::EaseIn);
+        let mut anim = Animated::new(0.).duration(1000.).easing(Easing::InSine);
         assert!(!anim.in_progress(0.0));
 
         anim.transition(10.0, 0.0);
@@ -872,7 +872,7 @@ mod tests {
 
     #[test]
     fn test_progression_negative() {
-        let mut anim = Animated::new(0.).duration(1.).easing(Easing::EaseInOut);
+        let mut anim = Animated::new(0.).duration(1.).easing(Easing::InOutSine);
 
         anim.transition(-10.0, 0.0);
         assert_eq!(anim.animate_wrapped(0.5), -5.0);
@@ -889,11 +889,11 @@ mod tests {
 
     #[test]
     fn test_multiple_interrupts_start_forward() {
-        let mut anim = Animated::new(0.).duration(1.).easing(Easing::EaseInOut);
+        let mut anim = Animated::new(0.).duration(1.).easing(Easing::InOutSine);
         anim.transition(1.0, 0.);
         assert!(anim.in_progress(0.5));
         let progress_at_interrupt = anim.eased_progress(0.5);
-        assert_eq!(progress_at_interrupt, Easing::EaseInOut.value(0.5));
+        assert_eq!(progress_at_interrupt, Easing::InOutSine.value(0.5));
         anim.transition(0.0, 0.5);
         assert_eq!(anim.eased_progress(0.5), progress_at_interrupt);
         assert!(anim.in_progress(0.7));
@@ -907,7 +907,7 @@ mod tests {
             .duration(1000.)
             .easing(Easing::Linear)
             .asymmetric_duration(2000.)
-            .asymmetric_easing(Easing::EaseInOut);
+            .asymmetric_easing(Easing::InOutSine);
 
         anim.transition(10.0, 0.0);
         assert_eq!(anim.animate_wrapped(500.0), 5.0); // 50% forward

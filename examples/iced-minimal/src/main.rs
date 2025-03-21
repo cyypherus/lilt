@@ -1,6 +1,6 @@
-use iced::widget::{horizontal_space, vertical_space, Button, Column, Row, Text};
-use iced::window::frames;
 use iced::Task;
+use iced::widget::{Button, Column, Row, Text, horizontal_space, vertical_space};
+use iced::window::frames;
 use iced::{Element, Length};
 use lilt::Animated;
 use lilt::Easing;
@@ -31,7 +31,7 @@ impl Default for Example {
 impl Example {
     fn new() -> Self {
         Self {
-            animated_toggle: Animated::new(false).duration(300.).easing(Easing::EaseOut),
+            animated_toggle: Animated::new(false).duration(300.).easing(Easing::OutSine),
         }
     }
 
