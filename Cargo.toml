@@ -1,8 +1,8 @@
 [package]
 name = "lilt"
 version = "0.8.0"
-edition = "2021"
-description = "A simple, dependency free library for running interruptable, transition based animations as a function of time."
+edition = "2024"
+description = " A simple library for running interruptable, transition based animations as a function of time."
 repository = "https://github.com/cyypherus/lilt"
 license = "MIT"
 keywords = ["animation", "interpolation"]
