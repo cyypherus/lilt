@@ -45,13 +45,14 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           path: coverage_branch
 
-      - name: Update coverage badge
+      - name: Generate badge from template
         run: |
           COVERAGE=$(jq -r '.coverage' coverage-summary.json)
-          echo "Updating badge.svg with coverage: ${COVERAGE}"
-          sed -i "s/%%/${COVERAGE}/g" coverage_branch/badge.svg
+          echo "Generating badge.svg with coverage: ${COVERAGE}"
+          # Use template.svg as the source and create/overwrite badge.svg with updated coverage
+          sed "s/%%/${COVERAGE}/g" coverage_branch/template.svg > coverage_branch/badge.svg
 
-      - name: Save coverage JSON for branch
+      - name: Save coverage JSON and badge for branch
         run: |
           set -euxo pipefail
           branch=${{ steps.get_branch.outputs.branch }}
@@ -62,7 +63,6 @@ jobs:
           cd coverage_branch
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # Stage all changes, including the updated badge
           git add -A
           if ! git diff --cached --quiet; then
             git commit -m "Update coverage for branch ${branch} at commit ${commit} on $(date -u)"
