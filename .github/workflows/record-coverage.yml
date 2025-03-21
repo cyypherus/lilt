@@ -3,6 +3,7 @@ name: record coverage
 on:
   push:
     branches: ["main"]
+  workflow_dispatch:
 
 jobs:
   record-coverage:
