@@ -48,9 +48,10 @@ jobs:
       - name: Generate badge from template
         run: |
           COVERAGE=$(jq -r '.data[0].totals.lines.percent' coverage-summary.json)
-          echo "Generating badge.svg with coverage: ${COVERAGE}"
-          # Use template.svg as the source and create/overwrite badge.svg with updated coverage
-          sed "s/%%/${COVERAGE}/g" coverage_branch/template.svg > coverage_branch/badge.svg
+          COVERAGE_ROUNDED=$(printf "%.0f" "$COVERAGE")
+          COVERAGE_DISPLAY="${COVERAGE_ROUNDED}%"
+          echo "Generating badge.svg with coverage: ${COVERAGE_DISPLAY}"
+          sed "s/%%/${COVERAGE_DISPLAY}/g" coverage_branch/template.svg >       coverage_branch/badge.svg
 
       - name: Save coverage JSON and badge for branch
         run: |
