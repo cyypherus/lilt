@@ -7,7 +7,7 @@ async fn main() {
     let time = get_time() as f32 * 1000.;
     let animation1: Animated<bool, f32> = Animated::new(false)
         .duration(2000.)
-        .easing(Easing::EaseInOutQuint)
+        .easing(Easing::InOutQuint)
         .repeat_forever()
         .auto_reverse()
         .auto_start(true, time);

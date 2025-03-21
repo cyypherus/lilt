@@ -1,14 +1,14 @@
 use iced::border::Radius;
 use iced::font::Weight;
-use iced::widget::canvas::path::lyon_path::geom::euclid::Transform2D;
-use iced::widget::canvas::path::lyon_path::geom::Angle;
-use iced::widget::canvas::path::lyon_path::math::vector;
 use iced::widget::canvas::path::Arc;
+use iced::widget::canvas::path::lyon_path::geom::Angle;
+use iced::widget::canvas::path::lyon_path::geom::euclid::Transform2D;
+use iced::widget::canvas::path::lyon_path::math::vector;
 use iced::widget::canvas::{self, Frame, Geometry, Path, Program, Stroke};
-use iced::widget::{center, container, svg, text, vertical_space, Container, Row, Stack};
+use iced::widget::{Container, Row, Stack, center, container, svg, text, vertical_space};
 use iced::window::frames;
 use iced::{
-    mouse, Background, Border, Color, Font, Point, Rectangle, Renderer, Subscription, Task,
+    Background, Border, Color, Font, Point, Rectangle, Renderer, Subscription, Task, mouse,
 };
 use iced::{Element, Length, Theme};
 use lilt::{Animated, FloatRepresentable};
@@ -68,7 +68,7 @@ impl Example {
                 .repeat_forever()
                 .auto_start(true, time),
             spinner_rotation_speed: Animated::new(false)
-                .easing(Easing::EaseInOut)
+                .easing(Easing::InOutSine)
                 .duration(500.)
                 .repeat_forever()
                 .auto_reverse()
@@ -76,9 +76,9 @@ impl Example {
             indicator_state: Animated::new(IndicatorState::Analyzing)
                 .easing(Easing::Custom(|l| {
                     if l < 0.5 {
-                        Easing::EaseInOutCirc.value(l)
+                        Easing::InOutCirc.value(l)
                     } else {
-                        Easing::EaseInOutElastic.value(l)
+                        Easing::InOutElastic.value(l)
                     }
                 }))
                 .duration(200.),
