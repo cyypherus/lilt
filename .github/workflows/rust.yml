@@ -29,7 +29,7 @@ jobs:
           set -euxo pipefail
           for d in examples/*/ ; do
             echo "Building example in directory $d"
-            (cd "$d" && cargo build --verbose)
+            (cd "$d" && CARGO_TARGET_DIR=../target cargo build --verbose)
           done
 
   clippy:
