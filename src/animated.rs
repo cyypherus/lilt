@@ -1177,11 +1177,11 @@ mod tests {
     //     assert_eq!(anim.animate_bool(0., 10., 3000.), 10.);
     // }
 
-    // fn approximately_equal(a: f32, b: f32) -> bool {
-    //     let close = f32::abs(a - b) < 1e-5;
-    //     if !close {
-    //         dbg!(a, b);
-    //     }
-    //     close
-    // }
+    fn approximately_equal(a: f32, b: f32) -> bool {
+        let close = f32::abs(a - b) < 1e-5;
+        if !close {
+            dbg!(a, b);
+        }
+        close
+    }
 }
