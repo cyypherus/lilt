@@ -3,7 +3,7 @@
 <img src="https://github.com/ejjonny/lilt/assets/17223924/2c5c1971-f10e-4766-9252-0ff8194e3e5d" width="100%">
 
 ![rust](https://github.com/ejjonny/lilt/actions/workflows/rust.yml/badge.svg)
-[![coverage](https://codecov.io/github/ejjonny/lilt/main/graph/badge.svg?token=4XJNXRSQNX)](https://codecov.io/github/ejjonny/lilt)
+![coverage](https://raw.githubusercontent.com/cyypherus/lilt/coverage/template.svg)
 [![crates.io](https://img.shields.io/crates/v/lilt.svg)](https://crates.io/crates/lilt)
 [![docs.rs](https://img.shields.io/badge/docs.rs-lilt-blue?logo=docs.rs)](https://docs.rs/lilt)
 [![downloads](https://img.shields.io/crates/d/lilt.svg)](https://crates.io/crates/lilt)
