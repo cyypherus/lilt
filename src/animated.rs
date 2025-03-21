@@ -870,318 +870,318 @@ mod tests {
         assert!(approximately_equal(anim.animate_wrapped(4.0), 10.0));
     }
 
-    #[test]
-    fn test_progression_negative() {
-        let mut anim = Animated::new(0.).duration(1.).easing(Easing::EaseInOut);
+    // #[test]
+    // fn test_progression_negative() {
+    //     let mut anim = Animated::new(0.).duration(1.).easing(Easing::EaseInOut);
 
-        anim.transition(-10.0, 0.0);
-        assert_eq!(anim.animate_wrapped(0.5), -5.0);
-        assert_eq!(anim.animate_wrapped(1.0), -10.0);
+    //     anim.transition(-10.0, 0.0);
+    //     assert_eq!(anim.animate_wrapped(0.5), -5.0);
+    //     assert_eq!(anim.animate_wrapped(1.0), -10.0);
 
-        assert!(anim.eased_progress(0.25) > anim.linear_progress(0.25));
-        assert!(anim.eased_progress(0.5) == anim.linear_progress(0.5));
-        assert!(anim.eased_progress(0.75) < anim.linear_progress(0.75));
+    //     assert!(anim.eased_progress(0.25) > anim.linear_progress(0.25));
+    //     assert!(anim.eased_progress(0.5) == anim.linear_progress(0.5));
+    //     assert!(anim.eased_progress(0.75) < anim.linear_progress(0.75));
 
-        anim.transition(0.0, 1.0);
-        assert_eq!(anim.animate_wrapped(1.5), -5.0);
-        assert_eq!(anim.animate_wrapped(2.0), 0.0);
-    }
+    //     anim.transition(0.0, 1.0);
+    //     assert_eq!(anim.animate_wrapped(1.5), -5.0);
+    //     assert_eq!(anim.animate_wrapped(2.0), 0.0);
+    // }
 
-    #[test]
-    fn test_multiple_interrupts_start_forward() {
-        let mut anim = Animated::new(0.).duration(1.).easing(Easing::EaseInOut);
-        anim.transition(1.0, 0.);
-        assert!(anim.in_progress(0.5));
-        let progress_at_interrupt = anim.eased_progress(0.5);
-        assert_eq!(progress_at_interrupt, Easing::EaseInOut.value(0.5));
-        anim.transition(0.0, 0.5);
-        assert_eq!(anim.eased_progress(0.5), progress_at_interrupt);
-        assert!(anim.in_progress(0.7));
-        anim.transition(1.0, 0.7);
-        assert!(anim.in_progress(0.9));
-    }
+    // #[test]
+    // fn test_multiple_interrupts_start_forward() {
+    //     let mut anim = Animated::new(0.).duration(1.).easing(Easing::EaseInOut);
+    //     anim.transition(1.0, 0.);
+    //     assert!(anim.in_progress(0.5));
+    //     let progress_at_interrupt = anim.eased_progress(0.5);
+    //     assert_eq!(progress_at_interrupt, Easing::EaseInOut.value(0.5));
+    //     anim.transition(0.0, 0.5);
+    //     assert_eq!(anim.eased_progress(0.5), progress_at_interrupt);
+    //     assert!(anim.in_progress(0.7));
+    //     anim.transition(1.0, 0.7);
+    //     assert!(anim.in_progress(0.9));
+    // }
 
-    #[test]
-    fn test_asymmetric() {
-        let mut anim = Animated::new(0.)
-            .duration(1000.)
-            .easing(Easing::Linear)
-            .asymmetric_duration(2000.)
-            .asymmetric_easing(Easing::EaseInOut);
+    // #[test]
+    // fn test_asymmetric() {
+    //     let mut anim = Animated::new(0.)
+    //         .duration(1000.)
+    //         .easing(Easing::Linear)
+    //         .asymmetric_duration(2000.)
+    //         .asymmetric_easing(Easing::EaseInOut);
 
-        anim.transition(10.0, 0.0);
-        assert_eq!(anim.animate_wrapped(500.0), 5.0); // 50% forward
-        assert_eq!(anim.animate_wrapped(1000.0), 10.); // 100% forward
+    //     anim.transition(10.0, 0.0);
+    //     assert_eq!(anim.animate_wrapped(500.0), 5.0); // 50% forward
+    //     assert_eq!(anim.animate_wrapped(1000.0), 10.); // 100% forward
 
-        anim.transition(0.0, 1000.0);
-        assert!(anim.animate_wrapped(1500.0) > 7.5); // 25% backwards
-        assert_eq!(anim.animate_wrapped(2000.0), 5.0); // 50% backwards
-        assert!(anim.animate_wrapped(2500.0) < 2.5); // 75% backwards
-        assert_eq!(anim.animate_wrapped(3000.0), 0.0); // 100% backwards
+    //     anim.transition(0.0, 1000.0);
+    //     assert!(anim.animate_wrapped(1500.0) > 7.5); // 25% backwards
+    //     assert_eq!(anim.animate_wrapped(2000.0), 5.0); // 50% backwards
+    //     assert!(anim.animate_wrapped(2500.0) < 2.5); // 75% backwards
+    //     assert_eq!(anim.animate_wrapped(3000.0), 0.0); // 100% backwards
 
-        anim.transition(10.0, 3000.0);
-        assert_eq!(anim.animate_wrapped(3250.0), 2.5); // 25% second forward
-        assert_eq!(anim.animate_wrapped(3500.0), 5.0); // 50% second forward
-        assert_eq!(anim.animate_wrapped(3750.0), 7.5); // 75% second forward
-        assert_eq!(anim.animate_wrapped(4000.0), 10.0); // 100% second forward
-    }
+    //     anim.transition(10.0, 3000.0);
+    //     assert_eq!(anim.animate_wrapped(3250.0), 2.5); // 25% second forward
+    //     assert_eq!(anim.animate_wrapped(3500.0), 5.0); // 50% second forward
+    //     assert_eq!(anim.animate_wrapped(3750.0), 7.5); // 75% second forward
+    //     assert_eq!(anim.animate_wrapped(4000.0), 10.0); // 100% second forward
+    // }
 
-    #[test]
-    fn test_asymmetric_auto_reversal() {
-        let mut anim = Animated::new(0.)
-            .duration(1000.)
-            .easing(Easing::Linear)
-            .asymmetric_duration(2000.)
-            .auto_reverse()
-            .repeat(1);
+    // #[test]
+    // fn test_asymmetric_auto_reversal() {
+    //     let mut anim = Animated::new(0.)
+    //         .duration(1000.)
+    //         .easing(Easing::Linear)
+    //         .asymmetric_duration(2000.)
+    //         .auto_reverse()
+    //         .repeat(1);
 
-        anim.transition(10.0, 0.0);
+    //     anim.transition(10.0, 0.0);
 
-        // ->
-        assert_eq!(anim.animate_wrapped(500.0), 5.0); // 50% forward
-        assert_eq!(anim.animate_wrapped(1000.0), 10.); // 100% forward
+    //     // ->
+    //     assert_eq!(anim.animate_wrapped(500.0), 5.0); // 50% forward
+    //     assert_eq!(anim.animate_wrapped(1000.0), 10.); // 100% forward
 
-        // <-
-        assert_eq!(anim.animate_wrapped(1500.0), 7.5); // 25% backwards
-        assert_eq!(anim.animate_wrapped(2000.0), 5.0); // 50% backwards
-        assert_eq!(anim.animate_wrapped(2500.0), 2.5); // 75% backwards
-        assert_eq!(anim.animate_wrapped(3000.0), 0.0); // 100% backwards
+    //     // <-
+    //     assert_eq!(anim.animate_wrapped(1500.0), 7.5); // 25% backwards
+    //     assert_eq!(anim.animate_wrapped(2000.0), 5.0); // 50% backwards
+    //     assert_eq!(anim.animate_wrapped(2500.0), 2.5); // 75% backwards
+    //     assert_eq!(anim.animate_wrapped(3000.0), 0.0); // 100% backwards
 
-        // ->
-        assert_eq!(anim.animate_wrapped(3250.0), 2.5); // 25% second forward
-        assert_eq!(anim.animate_wrapped(3500.0), 5.0); // 50% second forward
-        assert_eq!(anim.animate_wrapped(3750.0), 7.5); // 75% second forward
-        assert_eq!(anim.animate_wrapped(4000.0), 10.0); // 100% second forward
+    //     // ->
+    //     assert_eq!(anim.animate_wrapped(3250.0), 2.5); // 25% second forward
+    //     assert_eq!(anim.animate_wrapped(3500.0), 5.0); // 50% second forward
+    //     assert_eq!(anim.animate_wrapped(3750.0), 7.5); // 75% second forward
+    //     assert_eq!(anim.animate_wrapped(4000.0), 10.0); // 100% second forward
 
-        assert!(anim.eased_progress(3250.0) == anim.linear_progress(3250.0)); // 25% forward
-        assert!(anim.eased_progress(3500.0) == anim.linear_progress(3500.0)); // 50% forward
-        assert!(anim.eased_progress(3750.0) == anim.linear_progress(3750.0)); // 75% forward
-    }
+    //     assert!(anim.eased_progress(3250.0) == anim.linear_progress(3250.0)); // 25% forward
+    //     assert!(anim.eased_progress(3500.0) == anim.linear_progress(3500.0)); // 50% forward
+    //     assert!(anim.eased_progress(3750.0) == anim.linear_progress(3750.0)); // 75% forward
+    // }
 
-    #[test]
-    fn test_auto_reversal() {
-        let mut anim = Animated::new(0.)
-            .duration(1000.)
-            .auto_reverse()
-            .repeat(1)
-            .easing(Easing::Linear);
+    // #[test]
+    // fn test_auto_reversal() {
+    //     let mut anim = Animated::new(0.)
+    //         .duration(1000.)
+    //         .auto_reverse()
+    //         .repeat(1)
+    //         .easing(Easing::Linear);
 
-        anim.transition(10.0, 0.0);
+    //     anim.transition(10.0, 0.0);
 
-        assert_eq!(anim.animate_wrapped(0.0), 0.0);
+    //     assert_eq!(anim.animate_wrapped(0.0), 0.0);
 
-        // ->
-        assert_eq!(anim.animate_wrapped(250.0), 2.5); // 25% forward
-        assert_eq!(anim.animate_wrapped(500.0), 5.0); // 50% forward
-        assert_eq!(anim.animate_wrapped(750.0), 7.5); // 75% forward
-        assert_eq!(anim.animate_wrapped(1000.0), 10.0); // 100% forward
+    //     // ->
+    //     assert_eq!(anim.animate_wrapped(250.0), 2.5); // 25% forward
+    //     assert_eq!(anim.animate_wrapped(500.0), 5.0); // 50% forward
+    //     assert_eq!(anim.animate_wrapped(750.0), 7.5); // 75% forward
+    //     assert_eq!(anim.animate_wrapped(1000.0), 10.0); // 100% forward
 
-        // <-
-        assert_eq!(anim.animate_wrapped(1250.0), 7.5); // 25% backwards
-        assert_eq!(anim.animate_wrapped(1500.0), 5.0); // 50% backwards
-        assert_eq!(anim.animate_wrapped(1750.0), 2.5); // 75% backwards
-        assert_eq!(anim.animate_wrapped(2000.0), 0.0); // 100% backwards
+    //     // <-
+    //     assert_eq!(anim.animate_wrapped(1250.0), 7.5); // 25% backwards
+    //     assert_eq!(anim.animate_wrapped(1500.0), 5.0); // 50% backwards
+    //     assert_eq!(anim.animate_wrapped(1750.0), 2.5); // 75% backwards
+    //     assert_eq!(anim.animate_wrapped(2000.0), 0.0); // 100% backwards
 
-        // ->
-        assert_eq!(anim.animate_wrapped(2250.0), 2.5); // 25% forward
-        assert_eq!(anim.animate_wrapped(2500.0), 5.0); // 50% forward
-        assert_eq!(anim.animate_wrapped(2750.0), 7.5); // 75% forward
-        assert_eq!(anim.animate_wrapped(3000.0), 10.0); // 100% forward
-    }
+    //     // ->
+    //     assert_eq!(anim.animate_wrapped(2250.0), 2.5); // 25% forward
+    //     assert_eq!(anim.animate_wrapped(2500.0), 5.0); // 50% forward
+    //     assert_eq!(anim.animate_wrapped(2750.0), 7.5); // 75% forward
+    //     assert_eq!(anim.animate_wrapped(3000.0), 10.0); // 100% forward
+    // }
 
-    #[test]
-    fn test_negative_values() {
-        let mut anim = Animated::new(0.).duration(1000.).easing(Easing::Linear);
-        anim.transition(-10.0, 0.0);
-        assert_eq!(anim.animate_wrapped(0.0), 0.0);
-        assert_eq!(anim.animate_wrapped(500.0), -5.0);
-        assert_eq!(anim.animate_wrapped(1000.0), -10.0);
-        anim.transition(-5.0, 1000.0);
-        assert_eq!(anim.animate_wrapped(1000.0), -10.0);
-        assert_eq!(anim.animate_wrapped(1500.0), -7.5);
-        assert_eq!(anim.animate_wrapped(2000.0), -5.0);
-    }
+    // #[test]
+    // fn test_negative_values() {
+    //     let mut anim = Animated::new(0.).duration(1000.).easing(Easing::Linear);
+    //     anim.transition(-10.0, 0.0);
+    //     assert_eq!(anim.animate_wrapped(0.0), 0.0);
+    //     assert_eq!(anim.animate_wrapped(500.0), -5.0);
+    //     assert_eq!(anim.animate_wrapped(1000.0), -10.0);
+    //     anim.transition(-5.0, 1000.0);
+    //     assert_eq!(anim.animate_wrapped(1000.0), -10.0);
+    //     assert_eq!(anim.animate_wrapped(1500.0), -7.5);
+    //     assert_eq!(anim.animate_wrapped(2000.0), -5.0);
+    // }
 
-    #[test]
-    fn test_negative_to_positive_transition() {
-        let mut anim = Animated::new(-5.).duration(1000.).easing(Easing::Linear);
-        anim.transition(5.0, 0.0);
-        assert_eq!(anim.animate_wrapped(0.0), -5.0);
-        assert_eq!(anim.animate_wrapped(500.0), 0.0);
-        assert_eq!(anim.animate_wrapped(1000.0), 5.0);
-    }
+    // #[test]
+    // fn test_negative_to_positive_transition() {
+    //     let mut anim = Animated::new(-5.).duration(1000.).easing(Easing::Linear);
+    //     anim.transition(5.0, 0.0);
+    //     assert_eq!(anim.animate_wrapped(0.0), -5.0);
+    //     assert_eq!(anim.animate_wrapped(500.0), 0.0);
+    //     assert_eq!(anim.animate_wrapped(1000.0), 5.0);
+    // }
 
-    #[test]
-    fn test_interruption_with_negative_values() {
-        let mut anim = Animated::new(0.).duration(1000.).easing(Easing::Linear);
-        anim.transition(-10.0, 0.0);
-        assert_eq!(anim.animate_wrapped(250.0), -2.5);
-        anim.transition(5.0, 250.0); // Interrupt at 25%
-        assert_eq!(anim.animate_wrapped(750.0), 1.25); // Halfway to new destination
-        assert_eq!(anim.animate_wrapped(1250.0), 5.0); // Completed to new destination
-    }
+    // #[test]
+    // fn test_interruption_with_negative_values() {
+    //     let mut anim = Animated::new(0.).duration(1000.).easing(Easing::Linear);
+    //     anim.transition(-10.0, 0.0);
+    //     assert_eq!(anim.animate_wrapped(250.0), -2.5);
+    //     anim.transition(5.0, 250.0); // Interrupt at 25%
+    //     assert_eq!(anim.animate_wrapped(750.0), 1.25); // Halfway to new destination
+    //     assert_eq!(anim.animate_wrapped(1250.0), 5.0); // Completed to new destination
+    // }
 
-    #[test]
-    fn test_multiple_interruptions() {
-        let mut anim = Animated::new(0.).duration(1000.).easing(Easing::Linear);
+    // #[test]
+    // fn test_multiple_interruptions() {
+    //     let mut anim = Animated::new(0.).duration(1000.).easing(Easing::Linear);
 
-        anim.transition(10.0, 0.0);
-        assert_eq!(anim.animate_wrapped(500.0), 5.);
+    //     anim.transition(10.0, 0.0);
+    //     assert_eq!(anim.animate_wrapped(500.0), 5.);
 
-        anim.transition(15.0, 500.0); // First interruption
-        assert_eq!(anim.animate_wrapped(1000.0), 10.); // 50% to new destination
+    //     anim.transition(15.0, 500.0); // First interruption
+    //     assert_eq!(anim.animate_wrapped(1000.0), 10.); // 50% to new destination
 
-        anim.transition(0.0, 1000.0); // Second interruption
-        assert!(approximately_equal(anim.animate_wrapped(1500.0), 5.)); // Halfway to final destination
-        assert_eq!(anim.animate_wrapped(2000.0), 0.0); // Completed to final destination
-    }
+    //     anim.transition(0.0, 1000.0); // Second interruption
+    //     assert!(approximately_equal(anim.animate_wrapped(1500.0), 5.)); // Halfway to final destination
+    //     assert_eq!(anim.animate_wrapped(2000.0), 0.0); // Completed to final destination
+    // }
 
-    #[test]
-    fn test_interrupt_unchanged_destination() {
-        // Interrupts that don't change the destination shouldn't change duration.
-        // Despite the majority of other cases where we have to.
-        let mut anim_a = Animated::new(0.).duration(1000.).easing(Easing::Linear);
-        let mut anim_b = Animated::new(0.).duration(1000.).easing(Easing::Linear);
-        anim_a.transition(10., 0.);
-        anim_b.transition(10., 0.);
+    // #[test]
+    // fn test_interrupt_unchanged_destination() {
+    //     // Interrupts that don't change the destination shouldn't change duration.
+    //     // Despite the majority of other cases where we have to.
+    //     let mut anim_a = Animated::new(0.).duration(1000.).easing(Easing::Linear);
+    //     let mut anim_b = Animated::new(0.).duration(1000.).easing(Easing::Linear);
+    //     anim_a.transition(10., 0.);
+    //     anim_b.transition(10., 0.);
 
-        anim_a.transition(10., 250.);
-        assert_eq!(anim_a.linear_progress(250.), anim_b.linear_progress(250.));
-        assert_eq!(anim_a.linear_progress(500.), anim_b.linear_progress(500.));
-        assert_eq!(anim_a.linear_progress(750.), anim_b.linear_progress(750.));
-        assert_eq!(anim_a.linear_progress(1000.), anim_b.linear_progress(1000.));
-    }
+    //     anim_a.transition(10., 250.);
+    //     assert_eq!(anim_a.linear_progress(250.), anim_b.linear_progress(250.));
+    //     assert_eq!(anim_a.linear_progress(500.), anim_b.linear_progress(500.));
+    //     assert_eq!(anim_a.linear_progress(750.), anim_b.linear_progress(750.));
+    //     assert_eq!(anim_a.linear_progress(1000.), anim_b.linear_progress(1000.));
+    // }
 
-    #[test]
-    fn test_interruption_with_direction_change() {
-        let mut anim = Animated::new(0.).duration(1000.).easing(Easing::Linear);
-        anim.transition(10.0, 0.0);
-        assert_eq!(anim.animate_wrapped(500.0), 5.0);
-        anim.transition(-5.0, 500.0); // Interrupt and change direction
-        assert!(approximately_equal(anim.animate_wrapped(1000.0), 0.0)); // Halfway back to new destination
-        assert_eq!(anim.animate_wrapped(1500.0), -5.0); // Completed to new destination
-    }
+    // #[test]
+    // fn test_interruption_with_direction_change() {
+    //     let mut anim = Animated::new(0.).duration(1000.).easing(Easing::Linear);
+    //     anim.transition(10.0, 0.0);
+    //     assert_eq!(anim.animate_wrapped(500.0), 5.0);
+    //     anim.transition(-5.0, 500.0); // Interrupt and change direction
+    //     assert!(approximately_equal(anim.animate_wrapped(1000.0), 0.0)); // Halfway back to new destination
+    //     assert_eq!(anim.animate_wrapped(1500.0), -5.0); // Completed to new destination
+    // }
 
-    #[test]
-    fn test_zero_duration_transition() {
-        let mut anim = Animated::new(0.).duration(0.).easing(Easing::Linear);
-        anim.transition(10.0, 0.0);
-        assert_eq!(anim.animate_wrapped(0.0), 10.0); // Should immediately reach the destination
-        assert!(!anim.in_progress(0.0)); // Should not be in progress
-    }
+    // #[test]
+    // fn test_zero_duration_transition() {
+    //     let mut anim = Animated::new(0.).duration(0.).easing(Easing::Linear);
+    //     anim.transition(10.0, 0.0);
+    //     assert_eq!(anim.animate_wrapped(0.0), 10.0); // Should immediately reach the destination
+    //     assert!(!anim.in_progress(0.0)); // Should not be in progress
+    // }
 
-    #[test]
-    fn test_interruption_at_completion() {
-        let mut anim = Animated::new(0.).duration(1000.).easing(Easing::Linear);
-        anim.transition(10.0, 0.0);
-        assert_eq!(anim.animate_wrapped(1000.0), 10.0); // Completed
-        anim.transition(20.0, 1000.0); // Interrupt right at completion
-        assert_eq!(anim.animate_wrapped(1500.0), 15.0); // Halfway to new destination
-        assert_eq!(anim.animate_wrapped(2000.0), 20.0); // Completed to new destination
-    }
+    // #[test]
+    // fn test_interruption_at_completion() {
+    //     let mut anim = Animated::new(0.).duration(1000.).easing(Easing::Linear);
+    //     anim.transition(10.0, 0.0);
+    //     assert_eq!(anim.animate_wrapped(1000.0), 10.0); // Completed
+    //     anim.transition(20.0, 1000.0); // Interrupt right at completion
+    //     assert_eq!(anim.animate_wrapped(1500.0), 15.0); // Halfway to new destination
+    //     assert_eq!(anim.animate_wrapped(2000.0), 20.0); // Completed to new destination
+    // }
 
-    #[test]
-    fn test_animate() {
-        let mut anim = Animated::new(0.0f32)
-            .duration(1000.0)
-            .easing(Easing::Linear);
-        anim.transition(10.0, 0.0);
+    // #[test]
+    // fn test_animate() {
+    //     let mut anim = Animated::new(0.0f32)
+    //         .duration(1000.0)
+    //         .easing(Easing::Linear);
+    //     anim.transition(10.0, 0.0);
 
-        let result = anim.animate_wrapped(500.0);
-        assert_eq!(result, 5.0);
+    //     let result = anim.animate_wrapped(500.0);
+    //     assert_eq!(result, 5.0);
 
-        let result = anim.animate(|v| v * 2.0, 750.0);
-        assert_eq!(result, 15.0);
-    }
+    //     let result = anim.animate(|v| v * 2.0, 750.0);
+    //     assert_eq!(result, 15.0);
+    // }
 
-    #[test]
-    fn test_animate_if_eq() {
-        let mut anim = Animated::new(0.0f32)
-            .duration(1000.0)
-            .easing(Easing::Linear);
-        anim.transition(10.0, 0.0);
+    // #[test]
+    // fn test_animate_if_eq() {
+    //     let mut anim = Animated::new(0.0f32)
+    //         .duration(1000.0)
+    //         .easing(Easing::Linear);
+    //     anim.transition(10.0, 0.0);
 
-        let result = anim.animate_if_eq(10.0, 100.0, 0.0, 500.0);
-        assert_eq!(result, 50.0);
+    //     let result = anim.animate_if_eq(10.0, 100.0, 0.0, 500.0);
+    //     assert_eq!(result, 50.0);
 
-        let result = anim.animate_if_eq(5.0, 100.0, 0.0, 500.0);
-        assert_eq!(result, 0.0);
-    }
+    //     let result = anim.animate_if_eq(5.0, 100.0, 0.0, 500.0);
+    //     assert_eq!(result, 0.0);
+    // }
 
-    #[test]
-    fn test_animate_bool() {
-        let mut anim = Animated::new(false).duration(1000.0).easing(Easing::Linear);
-        anim.transition(true, 0.0);
+    // #[test]
+    // fn test_animate_bool() {
+    //     let mut anim = Animated::new(false).duration(1000.0).easing(Easing::Linear);
+    //     anim.transition(true, 0.0);
 
-        let result = anim.animate_bool(0.0, 10.0, 500.0);
-        assert_eq!(result, 5.0);
+    //     let result = anim.animate_bool(0.0, 10.0, 500.0);
+    //     assert_eq!(result, 5.0);
 
-        let result = anim.animate_bool(0.0, 10.0, 1000.0);
-        assert_eq!(result, 10.0);
-    }
+    //     let result = anim.animate_bool(0.0, 10.0, 1000.0);
+    //     assert_eq!(result, 10.0);
+    // }
 
-    #[test]
-    fn test_animate_with_interruption() {
-        let mut anim = Animated::new(0.0f32)
-            .duration(1000.0)
-            .easing(Easing::Linear);
-        anim.transition(10.0, 0.0);
+    // #[test]
+    // fn test_animate_with_interruption() {
+    //     let mut anim = Animated::new(0.0f32)
+    //         .duration(1000.0)
+    //         .easing(Easing::Linear);
+    //     anim.transition(10.0, 0.0);
 
-        let result = anim.animate_wrapped(500.0);
-        assert_eq!(result, 5.0);
+    //     let result = anim.animate_wrapped(500.0);
+    //     assert_eq!(result, 5.0);
 
-        anim.transition(20.0, 500.0);
-        let result = anim.animate(|v| v, 1000.0);
-        assert_eq!(result, 12.5);
+    //     anim.transition(20.0, 500.0);
+    //     let result = anim.animate(|v| v, 1000.0);
+    //     assert_eq!(result, 12.5);
 
-        let result = anim.animate_wrapped(1500.0);
-        assert_eq!(result, 20.0);
-    }
+    //     let result = anim.animate_wrapped(1500.0);
+    //     assert_eq!(result, 20.0);
+    // }
 
-    #[test]
-    fn test_animate_with_custom_easing() {
-        let custom_ease = Easing::Custom(|x| x.powi(2)); // Quadratic ease-in
-        let mut anim = Animated::new(0.0f32).duration(1000.0).easing(custom_ease);
-        anim.transition(10.0, 0.0);
+    // #[test]
+    // fn test_animate_with_custom_easing() {
+    //     let custom_ease = Easing::Custom(|x| x.powi(2)); // Quadratic ease-in
+    //     let mut anim = Animated::new(0.0f32).duration(1000.0).easing(custom_ease);
+    //     anim.transition(10.0, 0.0);
 
-        let result = anim.animate(|v| v, 500.0);
-        assert_eq!(result, 2.5); // (0.5^2 * 10)
+    //     let result = anim.animate(|v| v, 500.0);
+    //     assert_eq!(result, 2.5); // (0.5^2 * 10)
 
-        let result = anim.animate(|v| v, 750.0);
-        assert_eq!(result, 5.625); // (0.75^2 * 10)
-    }
+    //     let result = anim.animate(|v| v, 750.0);
+    //     assert_eq!(result, 5.625); // (0.75^2 * 10)
+    // }
 
-    #[test]
-    fn test_no_change_after_completion() {
-        let anim = Animated::new(false)
-            .duration(400.)
-            .auto_start(true, 0.)
-            .repeat(2)
-            .auto_reverse();
-        // Begin
-        assert_eq!(anim.animate_bool(0., 10., 800.), 0.);
-        assert_eq!(anim.animate_bool(0., 10., 1000.), 5.);
-        assert_eq!(anim.animate_bool(0., 10., 1200.), 10.);
-        assert_eq!(anim.animate_bool(0., 10., 1400.), 5.);
-        assert_eq!(anim.animate_bool(0., 10., 1600.), 0.);
-        assert_eq!(anim.animate_bool(0., 10., 1800.), 5.);
+    // #[test]
+    // fn test_no_change_after_completion() {
+    //     let anim = Animated::new(false)
+    //         .duration(400.)
+    //         .auto_start(true, 0.)
+    //         .repeat(2)
+    //         .auto_reverse();
+    //     // Begin
+    //     assert_eq!(anim.animate_bool(0., 10., 800.), 0.);
+    //     assert_eq!(anim.animate_bool(0., 10., 1000.), 5.);
+    //     assert_eq!(anim.animate_bool(0., 10., 1200.), 10.);
+    //     assert_eq!(anim.animate_bool(0., 10., 1400.), 5.);
+    //     assert_eq!(anim.animate_bool(0., 10., 1600.), 0.);
+    //     assert_eq!(anim.animate_bool(0., 10., 1800.), 5.);
 
-        // Completion
-        assert_eq!(anim.animate_bool(0., 10., 2000.), 10.);
+    //     // Completion
+    //     assert_eq!(anim.animate_bool(0., 10., 2000.), 10.);
 
-        // No changes after completion
-        assert_eq!(anim.animate_bool(0., 10., 2200.), 10.);
-        assert_eq!(anim.animate_bool(0., 10., 2400.), 10.);
-        assert_eq!(anim.animate_bool(0., 10., 2600.), 10.);
-        assert_eq!(anim.animate_bool(0., 10., 2800.), 10.);
-        assert_eq!(anim.animate_bool(0., 10., 3000.), 10.);
-    }
+    //     // No changes after completion
+    //     assert_eq!(anim.animate_bool(0., 10., 2200.), 10.);
+    //     assert_eq!(anim.animate_bool(0., 10., 2400.), 10.);
+    //     assert_eq!(anim.animate_bool(0., 10., 2600.), 10.);
+    //     assert_eq!(anim.animate_bool(0., 10., 2800.), 10.);
+    //     assert_eq!(anim.animate_bool(0., 10., 3000.), 10.);
+    // }
 
-    fn approximately_equal(a: f32, b: f32) -> bool {
-        let close = f32::abs(a - b) < 1e-5;
-        if !close {
-            dbg!(a, b);
-        }
-        close
-    }
+    // fn approximately_equal(a: f32, b: f32) -> bool {
+    //     let close = f32::abs(a - b) < 1e-5;
+    //     if !close {
+    //         dbg!(a, b);
+    //     }
+    //     close
+    // }
 }

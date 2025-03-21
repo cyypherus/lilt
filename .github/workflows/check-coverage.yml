@@ -1,4 +1,4 @@
-name: Coverage Diff
+name: coverage diff
 
 on:
   pull_request:

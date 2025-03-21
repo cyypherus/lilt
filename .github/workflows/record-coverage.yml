@@ -1,4 +1,4 @@
-name: Record Coverage Data
+name: record coverage
 
 on:
   push:
