@@ -28,8 +28,7 @@ jobs:
         run: |
           set -euxo pipefail
           for d in examples/*/ ; do
-            example=$(basename "$d")
-            cargo build
+            (cd $d cargo build)
           done
 
   clippy:
