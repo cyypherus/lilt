@@ -17,7 +17,7 @@ jobs:
         uses: taiki-e/install-action@cargo-llvm-cov
 
       - name: Generate PR coverage report
-        run: cargo llvm cov --json --output-path pr_coverage.json
+        run: cargo llvm-cov --json --summary-only > coverage-summary.json
 
       - name: Checkout coverage branch for baseline data
         uses: actions/checkout@v4
@@ -33,7 +33,7 @@ jobs:
 
       - name: Compare coverage using shell script
         run: |
-          pr_lines=$(jq '.data[0].totals.lines.percent' pr_coverage.json)
+          pr_lines=$(jq '.data[0].totals.lines.percent' coverage-summary.json)
           base_lines=$(jq '.data[0].totals.lines.percent' baseline_coverage.json)
           echo "PR line coverage: $pr_lines%"
           echo "Baseline line coverage: $base_lines%"
