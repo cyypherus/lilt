@@ -55,7 +55,7 @@ jobs:
           # Remove previous coverage file(s) for this branch from filesystem
           rm -f coverage_branch/coverage-data/${branch}-*.json || true
           # Copy new coverage summary with commit hash in file name
-          cp coverage-summary.json "coverage_branch/coverage-data/${branch}-${commit      }.json"
+          cp coverage-summary.json "coverage_branch/coverage-data/${branch}-${commit}.json"
           cd coverage_branch
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
