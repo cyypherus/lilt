@@ -52,14 +52,15 @@ jobs:
           branch=${{ steps.get_branch.outputs.branch }}
           commit=${GITHUB_SHA}
           mkdir -p coverage_branch/coverage-data
-          # Remove any previous coverage file for this branch
-          rm -f coverage_branch/coverage-data/${branch}-*.json
-          # Save the new coverage summary with the commit hash in the name
-          cp coverage-summary.json "coverage_branch/coverage-data/${branch}-${commit}.json"
+          # Remove previous coverage file(s) for this branch from filesystem
+          rm -f coverage_branch/coverage-data/${branch}-*.json || true
+          # Copy new coverage summary with commit hash in file name
+          cp coverage-summary.json "coverage_branch/coverage-data/${branch}-${commit      }.json"
           cd coverage_branch
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add coverage-data/${branch}-${commit}.json
+          # Stage all changes (additions and deletions) in the coverage-data      directory
+          git add -A coverage-data
           if ! git diff --cached --quiet; then
             git commit -m "Update coverage for branch ${branch} at commit ${commit}       on $(date -u)"
             git push origin coverage
