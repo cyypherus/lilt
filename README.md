@@ -74,6 +74,8 @@ lilt animations are fully independent of frame rate or tick frequency & only nee
 
 ## [Examples](examples/)
 
+Examples aren't included in lilts manifest to reduce the overhead from large GUI crates while maintainers work on lilt. To run examples, simply navigate to the desired example & run it as if it were a standalone crate with `cargo run`.
+
 ![indicator](https://github.com/ejjonny/lilt/assets/17223924/e4f81d63-67a4-4586-a2cf-309c687fd59d)
 
 ### Contributing
