@@ -29,7 +29,6 @@ jobs:
         id: get_branch
         run: |
           set -euxo pipefail
-          # For PRs use GITHUB_HEAD_REF; for pushes, strip "refs/heads/"
           if [ -n "${GITHUB_HEAD_REF}" ]; then
             branch=${GITHUB_HEAD_REF}
           else
@@ -45,23 +44,27 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           path: coverage_branch
 
+      - name: Update coverage badge
+        run: |
+          COVERAGE=$(jq -r '.coverage' coverage-summary.json)
+          echo "Updating badge.svg with coverage: ${COVERAGE}"
+          sed -i "s/%%/${COVERAGE}/g" coverage_branch/badge.svg
+
       - name: Save coverage JSON for branch
         run: |
           set -euxo pipefail
           branch=${{ steps.get_branch.outputs.branch }}
           commit=${GITHUB_SHA}
           mkdir -p coverage_branch/coverage-data
-          # Remove previous coverage file(s) for this branch from filesystem
           rm -f coverage_branch/coverage-data/${branch}-*.json || true
-          # Copy new coverage summary with commit hash in file name
           cp coverage-summary.json "coverage_branch/coverage-data/${branch}-${commit}.json"
           cd coverage_branch
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # Stage all changes (additions and deletions) in the coverage-data      directory
-          git add -A coverage-data
+          # Stage all changes, including the updated badge
+          git add -A
           if ! git diff --cached --quiet; then
-            git commit -m "Update coverage for branch ${branch} at commit ${commit}       on $(date -u)"
+            git commit -m "Update coverage for branch ${branch} at commit ${commit} on $(date -u)"
             git push origin coverage
           else
             echo "No changes to commit."
