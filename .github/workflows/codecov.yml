@@ -50,14 +50,15 @@ jobs:
         run: |
           set -euxo pipefail
           branch=${{ steps.get_branch.outputs.branch }}
+          commit=${GITHUB_SHA}
           mkdir -p coverage_branch/coverage-data
-          cp coverage-summary.json coverage_branch/coverage-data/${branch}.json
+          cp coverage-summary.json coverage_branch/coverage-data/${branch}-${commit     }.json
           cd coverage_branch
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add coverage-data/${branch}.json
+          git add coverage-data/${branch}-${commit}.json
           if ! git diff --cached --quiet; then
-            git commit -m "Update coverage for branch ${branch} at $(date -u)"
+            git commit -m "Update coverage for branch ${branch} at commit ${commit}       on $(date -u)"
             git push origin coverage
           else
             echo "No changes to commit."
