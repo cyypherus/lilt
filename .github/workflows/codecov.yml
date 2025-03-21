@@ -7,11 +7,15 @@ on:
 
 jobs:
   record-coverage:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Install Rust
         run: rustup update stable
+
       - name: Install cargo-llvm-cov
         uses: taiki-e/install-action@cargo-llvm-cov
 
@@ -19,7 +23,6 @@ jobs:
         id: run_cov
         run: |
           set -euxo pipefail
-
           cargo llvm-cov --json --summary-only > coverage-summary.json
           cat coverage-summary.json
 
@@ -27,7 +30,6 @@ jobs:
         id: get_branch
         run: |
           set -euxo pipefail
-
           # For PRs use GITHUB_HEAD_REF; for pushes, strip "refs/heads/"
           if [ -n "${GITHUB_HEAD_REF}" ]; then
             branch=${GITHUB_HEAD_REF}
@@ -35,7 +37,7 @@ jobs:
             branch=${GITHUB_REF#refs/heads/}
           fi
           echo "Branch is: $branch"
-          echo "::set-output name=branch::$branch"
+          echo "branch=${branch}" >> $GITHUB_OUTPUT
 
       - name: Checkout coverage branch
         uses: actions/checkout@v3
@@ -47,7 +49,6 @@ jobs:
       - name: Save coverage JSON for branch
         run: |
           set -euxo pipefail
-
           branch=${{ steps.get_branch.outputs.branch }}
           mkdir -p coverage_branch/coverage-data
           cp coverage-summary.json coverage_branch/coverage-data/${branch}.json
