@@ -1,0 +1,48 @@
+name: coverage diff
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        run: rustup update stable
+
+      - name: Install cargo-llvm-cov
+        uses: taiki-e/install-action@cargo-llvm-cov
+
+      - name: Generate PR coverage report
+        run: cargo llvm-cov --json --summary-only > coverage-summary.json
+
+      - name: Checkout coverage branch for baseline data
+        uses: actions/checkout@v4
+        with:
+          ref: coverage
+          path: coverage
+
+      - name: Get latest baseline coverage report
+        run: |
+          latest=$(ls -t coverage/coverage-data/cov-action-*.json | head -n1)
+          echo "Using baseline coverage report: $latest"
+          cp "$latest" baseline_coverage.json
+
+      - name: Compare coverage using shell script
+        run: |
+          pr_lines=$(jq '.data[0].totals.lines.percent' coverage-summary.json)
+          base_lines=$(jq '.data[0].totals.lines.percent' baseline_coverage.json)
+          echo "PR line coverage: $pr_lines%"
+          echo "Baseline line coverage: $base_lines%"
+          drop=$(echo "$base_lines - $pr_lines" | bc -l)
+          echo "Coverage drop: $drop%"
+          threshold=1.0
+          if (( $(echo "$drop > $threshold" | bc -l) )); then
+            echo "Coverage drop of $drop% exceeds allowed threshold of $threshold%."
+            exit 1
+          else
+            echo "Coverage is within acceptable limits."
+          fi
